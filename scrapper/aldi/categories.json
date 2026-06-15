@@ -1,0 +1,578 @@
+[
+  {
+    "name": "Alcohol",
+    "url": "https://www.aldi.co.uk/products/alcohol/k/1588161416978055"
+  },
+  {
+    "name": "Alcohol > Beers Ciders",
+    "url": "https://www.aldi.co.uk/products/alcohol/beers-ciders/k/1588161416978055001"
+  },
+  {
+    "name": "Alcohol > No Low Alcohol",
+    "url": "https://www.aldi.co.uk/products/alcohol/no-low-alcohol/k/1588161416978055008"
+  },
+  {
+    "name": "Alcohol > Port Sherry Fortified Wine",
+    "url": "https://www.aldi.co.uk/products/alcohol/port-sherry-fortified-wine/k/1588161416978055007"
+  },
+  {
+    "name": "Alcohol > Prosecco Champagne Sparkling Wine",
+    "url": "https://www.aldi.co.uk/products/alcohol/prosecco-champagne-sparkling-wine/k/1588161416978055006"
+  },
+  {
+    "name": "Alcohol > Red Wine",
+    "url": "https://www.aldi.co.uk/products/alcohol/red-wine/k/1588161416978055003"
+  },
+  {
+    "name": "Alcohol > Rose Wine",
+    "url": "https://www.aldi.co.uk/products/alcohol/rose-wine/k/1588161416978055004"
+  },
+  {
+    "name": "Alcohol > Spirits Liqueurs",
+    "url": "https://www.aldi.co.uk/products/alcohol/spirits-liqueurs/k/1588161416978055002"
+  },
+  {
+    "name": "Alcohol > White Wine",
+    "url": "https://www.aldi.co.uk/products/alcohol/white-wine/k/1588161416978055005"
+  },
+  {
+    "name": "Baby Toddler",
+    "url": "https://www.aldi.co.uk/products/baby-toddler/k/1588161416978057"
+  },
+  {
+    "name": "Baby Toddler > Baby Food Pouches Pots",
+    "url": "https://www.aldi.co.uk/products/baby-toddler/baby-food-pouches-pots/k/1588161416978057001"
+  },
+  {
+    "name": "Baby Toddler > Baby Formula",
+    "url": "https://www.aldi.co.uk/products/baby-toddler/baby-formula/k/1588161416978057003"
+  },
+  {
+    "name": "Baby Toddler > Baby Snacks Finger Food",
+    "url": "https://www.aldi.co.uk/products/baby-toddler/baby-snacks-finger-food/k/1588161416978057002"
+  },
+  {
+    "name": "Baby Toddler > Nappies",
+    "url": "https://www.aldi.co.uk/products/baby-toddler/nappies/k/1588161416978057004"
+  },
+  {
+    "name": "Baby Toddler > Wipes Creams Nappy Sacks",
+    "url": "https://www.aldi.co.uk/products/baby-toddler/wipes-creams-nappy-sacks/k/1588161416978057005"
+  },
+  {
+    "name": "Bakery",
+    "url": "https://www.aldi.co.uk/products/bakery/k/1588161416978049"
+  },
+  {
+    "name": "Bakery > Bagels",
+    "url": "https://www.aldi.co.uk/products/bakery/bagels/k/1588161416978049008"
+  },
+  {
+    "name": "Bakery > Bread",
+    "url": "https://www.aldi.co.uk/products/bakery/bread/k/1588161416978049001"
+  },
+  {
+    "name": "Bakery > Bread Rolls",
+    "url": "https://www.aldi.co.uk/products/bakery/bread-rolls/k/1588161416978049002"
+  },
+  {
+    "name": "Bakery > Breakfast Pastries",
+    "url": "https://www.aldi.co.uk/products/bakery/breakfast-pastries/k/1588161416978049005"
+  },
+  {
+    "name": "Bakery > Cakes",
+    "url": "https://www.aldi.co.uk/products/bakery/cakes/k/1588161416978049003"
+  },
+  {
+    "name": "Bakery > Scones Teacakes",
+    "url": "https://www.aldi.co.uk/products/bakery/scones-teacakes/k/1588161416978049006"
+  },
+  {
+    "name": "Bakery > Sweet Treats",
+    "url": "https://www.aldi.co.uk/products/bakery/sweet-treats/k/1588161416978049004"
+  },
+  {
+    "name": "Bakery > Wraps Naans Pittas Thins",
+    "url": "https://www.aldi.co.uk/products/bakery/wraps-naans-pittas-thins/k/1588161416978049007"
+  },
+  {
+    "name": "Chilled Food",
+    "url": "https://www.aldi.co.uk/products/chilled-food/k/1588161416978051"
+  },
+  {
+    "name": "Chilled Food > Cheese",
+    "url": "https://www.aldi.co.uk/products/chilled-food/cheese/k/1588161416978051004"
+  },
+  {
+    "name": "Chilled Food > Chilled Desserts",
+    "url": "https://www.aldi.co.uk/products/chilled-food/chilled-desserts/k/1588161416978051006"
+  },
+  {
+    "name": "Chilled Food > Chilled Meats",
+    "url": "https://www.aldi.co.uk/products/chilled-food/chilled-meats/k/1588161416978051011"
+  },
+  {
+    "name": "Chilled Food > Dairy",
+    "url": "https://www.aldi.co.uk/products/chilled-food/dairy/k/1588161416978051002"
+  },
+  {
+    "name": "Chilled Food > Eggs",
+    "url": "https://www.aldi.co.uk/products/chilled-food/eggs/k/1588161416978051003"
+  },
+  {
+    "name": "Chilled Food > Food To Go",
+    "url": "https://www.aldi.co.uk/products/chilled-food/food-to-go/k/1588161416978051013"
+  },
+  {
+    "name": "Chilled Food > Meat Substitutes",
+    "url": "https://www.aldi.co.uk/products/chilled-food/meat-substitutes/k/1588161421695436"
+  },
+  {
+    "name": "Chilled Food > Milk",
+    "url": "https://www.aldi.co.uk/products/chilled-food/milk/k/1588161416978051001"
+  },
+  {
+    "name": "Chilled Food > Party Food Pies Salads",
+    "url": "https://www.aldi.co.uk/products/chilled-food/party-food-pies-salads/k/1588161416978051012"
+  },
+  {
+    "name": "Chilled Food > Pizza Pasta Garlic Bread",
+    "url": "https://www.aldi.co.uk/products/chilled-food/pizza-pasta-garlic-bread/k/1588161416978051008"
+  },
+  {
+    "name": "Chilled Food > Ready Meals",
+    "url": "https://www.aldi.co.uk/products/chilled-food/ready-meals/k/1588161416978051007"
+  },
+  {
+    "name": "Chilled Food > Sides Starters",
+    "url": "https://www.aldi.co.uk/products/chilled-food/sides-starters/k/1588161416978051009"
+  },
+  {
+    "name": "Chilled Food > Soups",
+    "url": "https://www.aldi.co.uk/products/chilled-food/soups/k/1588161416978051010"
+  },
+  {
+    "name": "Chilled Food > Yogurts",
+    "url": "https://www.aldi.co.uk/products/chilled-food/yogurts/k/1588161416978051005"
+  },
+  {
+    "name": "Drinks",
+    "url": "https://www.aldi.co.uk/products/drinks/k/1588161416978054"
+  },
+  {
+    "name": "Drinks > Coffee",
+    "url": "https://www.aldi.co.uk/products/drinks/coffee/k/1588161416978054002"
+  },
+  {
+    "name": "Drinks > Hot Chocolate Malted Drinks",
+    "url": "https://www.aldi.co.uk/products/drinks/hot-chocolate-malted-drinks/k/1588161416978054003"
+  },
+  {
+    "name": "Drinks > Soft Drinks Juices",
+    "url": "https://www.aldi.co.uk/products/drinks/soft-drinks-juices/k/1588161416978054004"
+  },
+  {
+    "name": "Drinks > Tea",
+    "url": "https://www.aldi.co.uk/products/drinks/tea/k/1588161416978054001"
+  },
+  {
+    "name": "Drinks > Tonic Mixers",
+    "url": "https://www.aldi.co.uk/products/drinks/tonic-mixers/k/1588161416978054006"
+  },
+  {
+    "name": "Drinks > Water",
+    "url": "https://www.aldi.co.uk/products/drinks/water/k/1588161416978054005"
+  },
+  {
+    "name": "Father S Day",
+    "url": "https://www.aldi.co.uk/products/father-s-day/k/1588161422445165"
+  },
+  {
+    "name": "Food Cupboard",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/k/1588161416978053"
+  },
+  {
+    "name": "Food Cupboard > Biscuits Crackers",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/biscuits-crackers/k/1588161416978053001"
+  },
+  {
+    "name": "Food Cupboard > Cereals Snack Bars",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/cereals-snack-bars/k/1588161416978053002"
+  },
+  {
+    "name": "Food Cupboard > Chocolate Sweets",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/chocolate-sweets/k/1588161416978053003"
+  },
+  {
+    "name": "Food Cupboard > Crisps Snacks",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/crisps-snacks/k/1588161416978053004"
+  },
+  {
+    "name": "Food Cupboard > Desserts",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/desserts/k/1588161416978053005"
+  },
+  {
+    "name": "Food Cupboard > Herbs Spices",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/herbs-spices/k/1588161416978053007"
+  },
+  {
+    "name": "Food Cupboard > Jams Spreads Syrups",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/jams-spreads-syrups/k/1588161416978053006"
+  },
+  {
+    "name": "Food Cupboard > Rice Pasta Noodles",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/rice-pasta-noodles/k/1588161416978053008"
+  },
+  {
+    "name": "Food Cupboard > Sauces Oils Dressings",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/sauces-oils-dressings/k/1588161416978053010"
+  },
+  {
+    "name": "Food Cupboard > Seeds Nuts Dried Fruits",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/seeds-nuts-dried-fruits/k/1588161416978053009"
+  },
+  {
+    "name": "Food Cupboard > Sugar Home Baking",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/sugar-home-baking/k/1588161416978053011"
+  },
+  {
+    "name": "Food Cupboard > Tins Cans Packets",
+    "url": "https://www.aldi.co.uk/products/food-cupboard/tins-cans-packets/k/1588161416978053012"
+  },
+  {
+    "name": "Fresh Food",
+    "url": "https://www.aldi.co.uk/products/fresh-food/k/1588161416978050"
+  },
+  {
+    "name": "Fresh Food > Bacon Sausages",
+    "url": "https://www.aldi.co.uk/products/fresh-food/bacon-sausages/k/1588161416978050007"
+  },
+  {
+    "name": "Fresh Food > Beef",
+    "url": "https://www.aldi.co.uk/products/fresh-food/beef/k/1588161416978050005"
+  },
+  {
+    "name": "Fresh Food > Black Pudding Haggis Stuffing",
+    "url": "https://www.aldi.co.uk/products/fresh-food/black-pudding-haggis-stuffing/k/1588161416978050010"
+  },
+  {
+    "name": "Fresh Food > Breaded Fish Fishcakes",
+    "url": "https://www.aldi.co.uk/products/fresh-food/breaded-fish-fishcakes/k/1588161416978050013"
+  },
+  {
+    "name": "Fresh Food > Fish",
+    "url": "https://www.aldi.co.uk/products/fresh-food/fish/k/1588161416978050011"
+  },
+  {
+    "name": "Fresh Food > Fruit",
+    "url": "https://www.aldi.co.uk/products/fresh-food/fruit/k/1588161416978050001"
+  },
+  {
+    "name": "Fresh Food > Game Venison",
+    "url": "https://www.aldi.co.uk/products/fresh-food/game-venison/k/1588161416978050009"
+  },
+  {
+    "name": "Fresh Food > Lamb",
+    "url": "https://www.aldi.co.uk/products/fresh-food/lamb/k/1588161416978050008"
+  },
+  {
+    "name": "Fresh Food > Pork Gammon",
+    "url": "https://www.aldi.co.uk/products/fresh-food/pork-gammon/k/1588161416978050006"
+  },
+  {
+    "name": "Fresh Food > Poultry",
+    "url": "https://www.aldi.co.uk/products/fresh-food/poultry/k/1588161416978050004"
+  },
+  {
+    "name": "Fresh Food > Seafood Prawns",
+    "url": "https://www.aldi.co.uk/products/fresh-food/seafood-prawns/k/1588161416978050012"
+  },
+  {
+    "name": "Fresh Food > Stir Fry Vegetables Sauce Noodles",
+    "url": "https://www.aldi.co.uk/products/fresh-food/stir-fry-vegetables-sauce-noodles/k/1588161416978050003"
+  },
+  {
+    "name": "Fresh Food > Vegetables",
+    "url": "https://www.aldi.co.uk/products/fresh-food/vegetables/k/1588161416978050002"
+  },
+  {
+    "name": "Frozen Food",
+    "url": "https://www.aldi.co.uk/products/frozen-food/k/1588161416978056"
+  },
+  {
+    "name": "Frozen Food > Chips Potato",
+    "url": "https://www.aldi.co.uk/products/frozen-food/chips-potato/k/1588161416978056003"
+  },
+  {
+    "name": "Frozen Food > Fish Seafood",
+    "url": "https://www.aldi.co.uk/products/frozen-food/fish-seafood/k/1588161416978056002"
+  },
+  {
+    "name": "Frozen Food > Frozen Vegetarian Food",
+    "url": "https://www.aldi.co.uk/products/frozen-food/frozen-vegetarian-food/k/1588161421695435"
+  },
+  {
+    "name": "Frozen Food > Fruit Smoothies",
+    "url": "https://www.aldi.co.uk/products/frozen-food/fruit-smoothies/k/1588161416978056008"
+  },
+  {
+    "name": "Frozen Food > Ice Cream Desserts",
+    "url": "https://www.aldi.co.uk/products/frozen-food/ice-cream-desserts/k/1588161416978056009"
+  },
+  {
+    "name": "Frozen Food > Meat Poultry",
+    "url": "https://www.aldi.co.uk/products/frozen-food/meat-poultry/k/1588161416978056001"
+  },
+  {
+    "name": "Frozen Food > Party Food Snacks Pies",
+    "url": "https://www.aldi.co.uk/products/frozen-food/party-food-snacks-pies/k/1588161416978056007"
+  },
+  {
+    "name": "Frozen Food > Pizzas Garlic Bread",
+    "url": "https://www.aldi.co.uk/products/frozen-food/pizzas-garlic-bread/k/1588161416978056006"
+  },
+  {
+    "name": "Frozen Food > Ready Meals",
+    "url": "https://www.aldi.co.uk/products/frozen-food/ready-meals/k/1588161416978056005"
+  },
+  {
+    "name": "Frozen Food > Vegetables Sides",
+    "url": "https://www.aldi.co.uk/products/frozen-food/vegetables-sides/k/1588161416978056004"
+  },
+  {
+    "name": "Health Beauty",
+    "url": "https://www.aldi.co.uk/products/health-beauty/k/1588161416978058"
+  },
+  {
+    "name": "Health Beauty > Bath Shower Soap",
+    "url": "https://www.aldi.co.uk/products/health-beauty/bath-shower-soap/k/1588161416978058001"
+  },
+  {
+    "name": "Health Beauty > Bladder Weakness",
+    "url": "https://www.aldi.co.uk/products/health-beauty/bladder-weakness/k/1588161416978058002"
+  },
+  {
+    "name": "Health Beauty > Cotton Wool Buds",
+    "url": "https://www.aldi.co.uk/products/health-beauty/cotton-wool-buds/k/1588161416978058003"
+  },
+  {
+    "name": "Health Beauty > Dental Care",
+    "url": "https://www.aldi.co.uk/products/health-beauty/dental-care/k/1588161416978058004"
+  },
+  {
+    "name": "Health Beauty > Deodorants",
+    "url": "https://www.aldi.co.uk/products/health-beauty/deodorants/k/1588161416978058005"
+  },
+  {
+    "name": "Health Beauty > Medicine",
+    "url": "https://www.aldi.co.uk/products/health-beauty/medicine/k/1588161416978058010"
+  },
+  {
+    "name": "Health Beauty > Period Products",
+    "url": "https://www.aldi.co.uk/products/health-beauty/period-products/k/1588161416978058006"
+  },
+  {
+    "name": "Health Beauty > Shampoo Hair Care",
+    "url": "https://www.aldi.co.uk/products/health-beauty/shampoo-hair-care/k/1588161416978058008"
+  },
+  {
+    "name": "Health Beauty > Shaving Hair Removal",
+    "url": "https://www.aldi.co.uk/products/health-beauty/shaving-hair-removal/k/1588161416978058009"
+  },
+  {
+    "name": "Health Beauty > Skin Care",
+    "url": "https://www.aldi.co.uk/products/health-beauty/skin-care/k/1588161416978058007"
+  },
+  {
+    "name": "Health Beauty > Vitamins Supplements",
+    "url": "https://www.aldi.co.uk/products/health-beauty/vitamins-supplements/k/1588161416978058011"
+  },
+  {
+    "name": "Higher Protein Food Drink",
+    "url": "https://www.aldi.co.uk/products/higher-protein-food-drink/k/1588161424510127"
+  },
+  {
+    "name": "Home Essentials",
+    "url": "https://www.aldi.co.uk/products/home-essentials/k/1588161416978059"
+  },
+  {
+    "name": "Home Essentials > Air Fresheners",
+    "url": "https://www.aldi.co.uk/products/home-essentials/air-fresheners/k/1588161416978059010"
+  },
+  {
+    "name": "Home Essentials > Batteries",
+    "url": "https://www.aldi.co.uk/products/home-essentials/batteries/k/1588161416978059011"
+  },
+  {
+    "name": "Home Essentials > Carrier Bags",
+    "url": "https://www.aldi.co.uk/products/home-essentials/carrier-bags/k/1588161416978059012"
+  },
+  {
+    "name": "Home Essentials > Dishwashing",
+    "url": "https://www.aldi.co.uk/products/home-essentials/dishwashing/k/1588161416978059003"
+  },
+  {
+    "name": "Home Essentials > Flowers",
+    "url": "https://www.aldi.co.uk/products/home-essentials/flowers/k/1588161416978059001"
+  },
+  {
+    "name": "Home Essentials > Food Bags Foil Cling Film",
+    "url": "https://www.aldi.co.uk/products/home-essentials/food-bags-foil-cling-film/k/1588161416978059004"
+  },
+  {
+    "name": "Home Essentials > House Cleaning",
+    "url": "https://www.aldi.co.uk/products/home-essentials/house-cleaning/k/1588161416978059005"
+  },
+  {
+    "name": "Home Essentials > Laundry",
+    "url": "https://www.aldi.co.uk/products/home-essentials/laundry/k/1588161416978059006"
+  },
+  {
+    "name": "Home Essentials > Toilet Roll Kitchen Roll Tissues",
+    "url": "https://www.aldi.co.uk/products/home-essentials/toilet-roll-kitchen-roll-tissues/k/1588161416978059007"
+  },
+  {
+    "name": "Pet Care",
+    "url": "https://www.aldi.co.uk/products/pet-care/k/1588161416978060"
+  },
+  {
+    "name": "Pet Care > Cat Food",
+    "url": "https://www.aldi.co.uk/products/pet-care/cat-food/k/1588161416978060001"
+  },
+  {
+    "name": "Pet Care > Cat Litter",
+    "url": "https://www.aldi.co.uk/products/pet-care/cat-litter/k/1588161416978060003"
+  },
+  {
+    "name": "Pet Care > Cat Treats",
+    "url": "https://www.aldi.co.uk/products/pet-care/cat-treats/k/1588161416978060002"
+  },
+  {
+    "name": "Pet Care > Dog Accessories",
+    "url": "https://www.aldi.co.uk/products/pet-care/dog-accessories/k/1588161416978060006"
+  },
+  {
+    "name": "Pet Care > Dog Food",
+    "url": "https://www.aldi.co.uk/products/pet-care/dog-food/k/1588161416978060004"
+  },
+  {
+    "name": "Pet Care > Dog Treats",
+    "url": "https://www.aldi.co.uk/products/pet-care/dog-treats/k/1588161416978060005"
+  },
+  {
+    "name": "Picky Bits",
+    "url": "https://www.aldi.co.uk/products/picky-bits/k/1588161431404419"
+  },
+  {
+    "name": "Price Drops",
+    "url": "https://www.aldi.co.uk/products/price-drops/k/1588161430418388"
+  },
+  {
+    "name": "Specialbuys",
+    "url": "https://www.aldi.co.uk/products/specialbuys/k/1588161416584096"
+  },
+  {
+    "name": "Specialbuys > Baby And Toddler",
+    "url": "https://www.aldi.co.uk/products/specialbuys/baby-and-toddler/k/1588161416584098"
+  },
+  {
+    "name": "Specialbuys > Clothing",
+    "url": "https://www.aldi.co.uk/products/specialbuys/clothing/k/1588161416584099"
+  },
+  {
+    "name": "Specialbuys > Diy",
+    "url": "https://www.aldi.co.uk/products/specialbuys/diy/k/1588161416584100"
+  },
+  {
+    "name": "Specialbuys > Electricals",
+    "url": "https://www.aldi.co.uk/products/specialbuys/electricals/k/1588161416584101"
+  },
+  {
+    "name": "Specialbuys > Garden",
+    "url": "https://www.aldi.co.uk/products/specialbuys/garden/k/1588161416584106"
+  },
+  {
+    "name": "Specialbuys > Health And Beauty",
+    "url": "https://www.aldi.co.uk/products/specialbuys/health-and-beauty/k/1588161416584102"
+  },
+  {
+    "name": "Specialbuys > Hobbies And Crafts",
+    "url": "https://www.aldi.co.uk/products/specialbuys/hobbies-and-crafts/k/1588161416584103"
+  },
+  {
+    "name": "Specialbuys > Home",
+    "url": "https://www.aldi.co.uk/products/specialbuys/home/k/1588161416584104"
+  },
+  {
+    "name": "Specialbuys > Kitchen",
+    "url": "https://www.aldi.co.uk/products/specialbuys/kitchen/k/1588161416584105"
+  },
+  {
+    "name": "Specialbuys > Motoring And Travel",
+    "url": "https://www.aldi.co.uk/products/specialbuys/motoring-and-travel/k/1588161416584107"
+  },
+  {
+    "name": "Specialbuys > Pets",
+    "url": "https://www.aldi.co.uk/products/specialbuys/pets/k/1588161416584109"
+  },
+  {
+    "name": "Specialbuys > Plants Flowers",
+    "url": "https://www.aldi.co.uk/products/specialbuys/plants-flowers/k/1588161416584111"
+  },
+  {
+    "name": "Specialbuys > Sports And Leisure",
+    "url": "https://www.aldi.co.uk/products/specialbuys/sports-and-leisure/k/1588161416584108"
+  },
+  {
+    "name": "Specialbuys > Toys",
+    "url": "https://www.aldi.co.uk/products/specialbuys/toys/k/1588161416584110"
+  },
+  {
+    "name": "Specially Selected",
+    "url": "https://www.aldi.co.uk/products/specially-selected/k/1588161431580089"
+  },
+  {
+    "name": "Summer Range",
+    "url": "https://www.aldi.co.uk/products/summer-range/k/1588161422445158"
+  },
+  {
+    "name": "Summer Range > Bbq",
+    "url": "https://www.aldi.co.uk/products/summer-range/bbq/k/1588161422445160"
+  },
+  {
+    "name": "Summer Range > Drinks",
+    "url": "https://www.aldi.co.uk/products/summer-range/drinks/k/1588161422445162"
+  },
+  {
+    "name": "Summer Range > Summer Chill",
+    "url": "https://www.aldi.co.uk/products/summer-range/summer-chill/k/1588161422445164"
+  },
+  {
+    "name": "Summer Range > Suncream",
+    "url": "https://www.aldi.co.uk/products/summer-range/suncream/k/1588161422445163"
+  },
+  {
+    "name": "Summer Range > Sweet Treats",
+    "url": "https://www.aldi.co.uk/products/summer-range/sweet-treats/k/1588161422445161"
+  },
+  {
+    "name": "Vegetarian Plant Based",
+    "url": "https://www.aldi.co.uk/products/vegetarian-plant-based/k/1588161421881163"
+  },
+  {
+    "name": "Vegetarian Plant Based > Chilled Vegan",
+    "url": "https://www.aldi.co.uk/products/vegetarian-plant-based/chilled-vegan/k/1588161421881163004"
+  },
+  {
+    "name": "Vegetarian Plant Based > Chilled Vegetarian",
+    "url": "https://www.aldi.co.uk/products/vegetarian-plant-based/chilled-vegetarian/k/1588161421881163002"
+  },
+  {
+    "name": "Vegetarian Plant Based > Frozen Vegetarian",
+    "url": "https://www.aldi.co.uk/products/vegetarian-plant-based/frozen-vegetarian/k/1588161421881163003"
+  },
+  {
+    "name": "Vegetarian Plant Based > Plant Based Drinks",
+    "url": "https://www.aldi.co.uk/products/vegetarian-plant-based/plant-based-drinks/k/1588161421881163001"
+  }
+]

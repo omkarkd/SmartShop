@@ -82,7 +82,7 @@ def create_driver():
     _cleanup_stale_chrome()
     time.sleep(random.uniform(1.0, 3.0))
     options = uc.ChromeOptions()
-    options.headless = False
+    options.headless = os.environ.get("CHROME_HEADLESS", "").lower() in ("1", "true", "yes")
     user_data_dir = tempfile.mkdtemp(prefix=f"aldi_{os.getpid()}_")
     options.add_argument(f"--user-data-dir={user_data_dir}")
     port = random.randint(20000, 60000)

@@ -1,3 +1,4 @@
+import os
 import time
 import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
@@ -13,7 +14,12 @@ SAINSBURYS_OWN_BRANDS = {
 def create_driver(retries=3):
     for attempt in range(retries):
         try:
-            driver = uc.Chrome()
+            options = uc.ChromeOptions()
+            if os.environ.get("CHROME_HEADLESS", "").lower() in ("1", "true", "yes"):
+                options.add_argument("--headless=new")
+                options.add_argument("--no-sandbox")
+                options.add_argument("--disable-dev-shm-usage")
+            driver = uc.Chrome(options=options)
             for nav_retry in range(3):
                 try:
                     driver.get("about:blank")

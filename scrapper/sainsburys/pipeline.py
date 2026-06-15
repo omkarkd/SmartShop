@@ -24,7 +24,7 @@ def is_noise(name):
     return False
 
 
-def load_hierarchy(path="scrapper/sainsburys/data/category_hierarchy.json"):
+def load_hierarchy(path="scrapper/sainsburys/category_hierarchy.json"):
     with open(path) as f:
         return json.load(f)
 

@@ -10,7 +10,7 @@ sys.path.insert(0, ROOT)
 from scrapper.aldi.scraper import scrape_category, create_driver
 from scrapper.aldi.db import AldiDB
 
-CATEGORIES_FILE = os.path.join(ROOT, "test_scraper/aldi_unique_categories.json")
+CATEGORIES_FILE = os.path.join(os.path.dirname(__file__), "categories.json")
 
 SKIP_PATTERNS = ["father", "summer", "specialbuys", "price drops", "picky bits",
                  "higher protein", "specially selected"]

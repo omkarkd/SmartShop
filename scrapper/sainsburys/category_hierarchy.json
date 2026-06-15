@@ -1,0 +1,768 @@
+{
+  "Baby Toddler": [
+    {
+      "name": "Baby & toddler",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/c:1018771"
+    },
+    {
+      "name": "Nappies & pants",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/nappies-and-pants/c:1018737"
+    },
+    {
+      "name": "Baby & toddler milk",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/baby-milk-and-drinks/c:1018704"
+    },
+    {
+      "name": "Baby & toddler food",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/baby-meals/c:1018695"
+    },
+    {
+      "name": "Toddler snacks",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/snacks-and-rusks/c:1018743"
+    },
+    {
+      "name": "Wipes",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/wipes/c:1018770"
+    },
+    {
+      "name": "Toiletries & healthcare",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/toiletries-and-healthcare/c:1018760"
+    },
+    {
+      "name": "Bottles & feeding",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/bottles-and-feeding-accessories/c:1018712"
+    },
+    {
+      "name": "Accessories",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/accessories/c:1018682"
+    },
+    {
+      "name": "baby food",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/baby-meals/stage-1-4-months-and-up/c:1018690"
+    },
+    {
+      "name": "baby toiletries",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/toiletries-and-healthcare/all-toiletries/c:1018746"
+    },
+    {
+      "name": "snacks & rusks",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/baby-and-toddler/snacks-and-rusks/over-12-months/c:1018740"
+    }
+  ],
+  "Bakery": [
+    {
+      "name": "Bakery",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/c:1018859"
+    },
+    {
+      "name": "Bread",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/bread/c:1018785"
+    },
+    {
+      "name": "Rolls and bagels",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/bread-rolls-and-bagels/c:1018791"
+    },
+    {
+      "name": "Cakes",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/cakes/c:1018800"
+    },
+    {
+      "name": "Croissants and pastries",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/croissants-and-pastries/c:1018812"
+    },
+    {
+      "name": "Doughnuts, cookies and muffins",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/doughnuts-cookies-and-muffins/c:1018820"
+    },
+    {
+      "name": "From our instore bakery",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/from-our-in-store-bakery/c:1018834"
+    },
+    {
+      "name": "Fruited loaves and buns",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/fruited-loaves-and-buns/c:1018850"
+    },
+    {
+      "name": "Garlic breads",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/garlic-breads/c:1018838"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/wraps-thins-and-pittas/c:1018858"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/bakery/cakes/cake-slices-and-bars/c:1018794"
+    }
+  ],
+  "Beer Wine Spirits": [
+    {
+      "name": "Beer, wine and spirits",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/beer-wine-and-spirits/c:1057806"
+    },
+    {
+      "name": "Crafted for better beer nights\nExplore our new Craft Beer hub",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/beer-wine-and-spirits/beer/craft-beer/c:1019271"
+    },
+    {
+      "name": "Your favourite spirits, all in one place\nDiscover your signature serve",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/beer-wine-and-spirits/spirits-and-liqueurs/c:1019377"
+    }
+  ],
+  "Chilled Food": [
+    {
+      "name": "Chilled food",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/c:1019184"
+    },
+    {
+      "name": "Butter and spreads",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/butter-and-spreads/c:1019034"
+    },
+    {
+      "name": "Cheese",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/cheese/c:1019044"
+    },
+    {
+      "name": "Cream",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/cream/c:1045498"
+    },
+    {
+      "name": "Dairy & chilled essentials",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/dairy-and-chilled-essentials/c:1019022"
+    },
+    {
+      "name": "Dairy free",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/dairy-free/c:1019053"
+    },
+    {
+      "name": "Delicatessen",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/delicatessen/c:1019021"
+    },
+    {
+      "name": "Desserts",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/desserts/c:1019084"
+    },
+    {
+      "name": "Drinks and fruit juice",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/drinks-and-fruit-juice/c:1019106"
+    },
+    {
+      "name": "Eggs",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/eggs/c:1019054"
+    },
+    {
+      "name": "Fresh gravy, sauces and stocks",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/fresh-gravy-sauces-and-stocks/c:1055194"
+    },
+    {
+      "name": "Fresh soup",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/fresh-soup/c:1019093"
+    },
+    {
+      "name": "Kosher & halal",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/kosher-and-halal/c:1019183"
+    },
+    {
+      "name": "Meal kits",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/meal-kits/c:1053925"
+    },
+    {
+      "name": "Milk",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/milk/c:1019059"
+    },
+    {
+      "name": "Pastry",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/pastry/c:1019031"
+    },
+    {
+      "name": "Pies, pasties & quiche",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/pies-pasties-and-quiche/c:1019116"
+    },
+    {
+      "name": "Pizza, pasta & garlic bread",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/pizza-pasta-and-garlic-bread/c:1019123"
+    },
+    {
+      "name": "Ready meals",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/ready-meals/c:1019143"
+    },
+    {
+      "name": "Sandwiches & food to go",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/sandwiches-and-food-to-go/c:1019152"
+    },
+    {
+      "name": "Savoury snacks",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/savoury-snacks/c:1019161"
+    },
+    {
+      "name": "Vegetarian and vegan",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/vegetarian-and-vegan/c:1019176"
+    },
+    {
+      "name": "Yogurts",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/chilled-food/yogurts/c:1019074"
+    }
+  ],
+  "Dietary World Foods": [
+    {
+      "name": "Dietary & world foods",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/c:1019265"
+    },
+    {
+      "name": "Egg free",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/egg-free/c:1019187"
+    },
+    {
+      "name": "Gluten free",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/gluten-free/c:1019201"
+    },
+    {
+      "name": "Lactose free",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/lactose-free/c:1019202"
+    },
+    {
+      "name": "Low & no alcohol",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/low-and-no-alcohol/c:1019223"
+    },
+    {
+      "name": "Milk free",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/milk-free/c:1019212"
+    },
+    {
+      "name": "Nut free",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/nut-free/c:1019213"
+    },
+    {
+      "name": "Organic",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/organic/c:1019232"
+    },
+    {
+      "name": "Soya free",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/soya-free/c:1019214"
+    },
+    {
+      "name": "Sports nutrition",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/sports-nutrition/c:1019241"
+    },
+    {
+      "name": "Vegan",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/vegan/c:1019249"
+    },
+    {
+      "name": "Vegetarian",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/vegetarian/c:1019250"
+    },
+    {
+      "name": "World foods",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/world-foods/c:1034136"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/world-foods/eastern-europe/c:1034073"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/world-foods/far-east-and-south-east-asian/c:1034072"
+    },
+    {
+      "name": "Asian",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/world-foods/asian/c:1034070"
+    },
+    {
+      "name": "Caribbean",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/world-foods/african-and-caribbean/c:1034075"
+    },
+    {
+      "name": "kosher",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/world-foods/kosher/c:1034074"
+    },
+    {
+      "name": "halal",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/world-foods/halal/c:1034071"
+    },
+    {
+      "name": "Irish",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/world-foods/irish/c:1034076"
+    },
+    {
+      "name": "American",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/world-foods/american/c:1034077"
+    }
+  ],
+  "Drinks": [
+    {
+      "name": "Occasions",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/occasions-by-sainsburys/c:1046171"
+    }
+  ],
+  "Fish Seafood": [
+    {
+      "name": "Fish & seafood is under Meat & Fish category",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/fish-and-seafood/c:1020363"
+    }
+  ],
+  "Food Cupboard": [
+    {
+      "name": "Occasions",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/occasions-by-sainsburys/c:1046171"
+    },
+    {
+      "name": "Breakfast cereals",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/breakfast-cereals/c:1019573"
+    },
+    {
+      "name": "Canned and tinned food",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/canned-and-tinned-food/c:1019540"
+    },
+    {
+      "name": "Cooking ingredients",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/cooking-ingredients/c:1019630"
+    },
+    {
+      "name": "Cooking oils",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/cooking-oils/c:1019623"
+    },
+    {
+      "name": "Cooking sauces, meal kits and sides",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/cooking-sauces-meal-kits-and-sides/c:1019666"
+    },
+    {
+      "name": "Desserts",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/desserts/c:1019744"
+    },
+    {
+      "name": "Flour",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/flour/c:1019821"
+    },
+    {
+      "name": "Food cupboard essentials",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/food-cupboard-essentials/c:1019697"
+    },
+    {
+      "name": "Freefrom",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/freefrom/c:1019730"
+    },
+    {
+      "name": "Herbs, spices and seasoning",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/herbs-spices-and-seasoning/c:1019609"
+    },
+    {
+      "name": "Home baking",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/home-baking/c:1019837"
+    },
+    {
+      "name": "Instant snack and meals",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/instant-snack-and-meals/c:1019765"
+    },
+    {
+      "name": "Jams, honey and spreads",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/jams-honey-and-spreads/c:1019754"
+    },
+    {
+      "name": "Noodles",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/noodles/c:1019772"
+    },
+    {
+      "name": "Pasta",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/pasta/c:1019784"
+    },
+    {
+      "name": "Quinoa, couscous and pulses",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/quinoa-couscous-and-pulses/c:1019785"
+    },
+    {
+      "name": "Rice",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/rice/c:1019792"
+    },
+    {
+      "name": "Sugar, syrups and sweeteners",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/sugar-syrups-and-sweeteners/c:1019835"
+    },
+    {
+      "name": "Table sauces, dressings and condiments",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/table-sauces-dressings-and-condiments/c:1019850"
+    },
+    {
+      "name": "Tea, coffee and hot drinks",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/tea-coffee-and-hot-drinks/c:1019869"
+    },
+    {
+      "name": "World Foods",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/world-foods/c:1019882"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/breakfast-cereals/bran/c:1019548"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/canned-and-tinned-food/tinned-soup/c:1019517"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/breakfast-cereals/porridge-oats/c:1019565"
+    },
+    {
+      "name": "ORGANIC",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/organic/c:1019232"
+    },
+    {
+      "name": "granola",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/cereals/granola-crisps-and-clusters/c:1019559"
+    },
+    {
+      "name": "porridge",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/cereals/porridge-and-oats/c:1019569"
+    },
+    {
+      "name": "pasta",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/rice-pasta-and-noodles/pasta/c:1019784"
+    },
+    {
+      "name": "noodles",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/rice-pasta-and-noodles/noodles/c:1019772"
+    },
+    {
+      "name": "oil",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/cooking-ingredients-and-oils/oils/c:1019623"
+    },
+    {
+      "name": "ketchup",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/table-sauces-dressings-and-condiments/tomato-ketchup/c:1019847"
+    },
+    {
+      "name": "List of Partners (vendors)",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/food-cupboard/c:1019883#"
+    }
+  ],
+  "Frozen": [
+    {
+      "name": "Frozen",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/c:1020001"
+    },
+    {
+      "name": "Chips and wedges",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/chips-and-wedges/c:1019895"
+    },
+    {
+      "name": "Desserts & pastry",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/desserts-and-pastry/c:1019902"
+    },
+    {
+      "name": "Fish & seafood",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/fish-and-seafood/c:1019924"
+    },
+    {
+      "name": "Fruit",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/fruit/c:1019927"
+    },
+    {
+      "name": "Garlic bread",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/garlic-bread/c:1019969"
+    },
+    {
+      "name": "Ice",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/ice/c:1019940"
+    },
+    {
+      "name": "Ice cream",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/ice-cream/c:1019943"
+    },
+    {
+      "name": "Meat & poultry",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/meat-and-poultry/c:1019966"
+    },
+    {
+      "name": "Party food",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/party-food/c:1019983"
+    },
+    {
+      "name": "Pizza",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/pizza/c:1019974"
+    },
+    {
+      "name": "Ready meals",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/ready-meals/c:1019986"
+    },
+    {
+      "name": "Rice",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/rice/c:1019891"
+    },
+    {
+      "name": "Special offers",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/special-offers/c:1019987"
+    },
+    {
+      "name": "Vegetables",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/vegetables/c:1019934"
+    },
+    {
+      "name": "Vegetarian",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/vegetarian/c:1019999"
+    },
+    {
+      "name": "Yorkshire puddings and stuffing",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/frozen/yorkshire-puddings-and-stuffing/c:1020000"
+    }
+  ],
+  "Fruit Vegetables": [
+    {
+      "name": "Occasions",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/occasions-by-sainsburys/c:1046171"
+    },
+    {
+      "name": "Flowers and plants",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/flowers-and-plants/c:1020005"
+    },
+    {
+      "name": "Fresh fruit",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-fruit/c:1020020"
+    },
+    {
+      "name": "Fresh herbs and spices",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-herbs-and-spices/c:1020027"
+    },
+    {
+      "name": "Fresh salad",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-salad/c:1020040"
+    },
+    {
+      "name": "Fresh vegetables",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-vegetables/c:1020057"
+    },
+    {
+      "name": "Frozen fruit and vegetables",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/frozen-fruit-and-vegetables/c:1020067"
+    },
+    {
+      "name": "Fruit & veg essentials",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fruit-and-veg-essentials/c:1020068"
+    },
+    {
+      "name": "Step away from the peeler\nWashed, chopped and full of flavour \u2013 grab any 3 prepared vegetables for the price of 2",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-vegetables/prepped-vegetables/c:1020074"
+    },
+    {
+      "name": "Fresh-picked Jersey Royals\nGrown in Jersey's rich soils and naturally nourished for incredible flavour",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-vegetables/potatoes-and-sweet-potatoes/c:1020051"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-fruit/cherries-and-berries/c:1054832"
+    },
+    {
+      "name": "ORGANIC",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/dietary-and-world-foods/organic/c:1019232"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-vegetables/prepared-vegetables/c:1020074"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-fruit/prepared-fruit/c:1020075"
+    },
+    {
+      "name": "pears",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-fruit/pears/c:1034100"
+    },
+    {
+      "name": "apples",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-fruit/apples/c:1034099"
+    },
+    {
+      "name": "bananas",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-fruit/bananas-and-grapes/c:1020008"
+    },
+    {
+      "name": "exotic fruits",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-fruit/papaya-pomegranate-and-exotic-fruit/c:1020016"
+    },
+    {
+      "name": "Onions",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-vegetables/onions/c:1034106"
+    },
+    {
+      "name": "Salad bags",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-salad/salad-bags/c:1020034"
+    },
+    {
+      "name": "tomatoes",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/fresh-salad/tomatoes/c:1020039"
+    },
+    {
+      "name": "stir fry veg",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/prepared-fruit-veg-and-salad/stir-fry-vegetables-sauce-and-noodles/c:1020078"
+    },
+    {
+      "name": "List of Partners (vendors)",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/fruit-and-vegetables/c:1020082#"
+    }
+  ],
+  "Household": [
+    {
+      "name": "Occasions",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/occasions-by-sainsburys/c:1046171"
+    },
+    {
+      "name": "Cleaning",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/cleaning-products/c:1020245"
+    },
+    {
+      "name": "Laundry",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/laundry/c:1020289"
+    },
+    {
+      "name": "Dishwasher & washing up",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/dishwasher-and-washing-up/c:1020252"
+    },
+    {
+      "name": "Toilet roll, kitchen roll & tissues",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/toilet-roll-kitchen-roll-and-tissues/c:1020322"
+    },
+    {
+      "name": "Air fresheners",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/air-fresheners/c:1020237"
+    },
+    {
+      "name": "Foil, food bags & storage",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/foil-food-bags-and-storage/c:1020254"
+    },
+    {
+      "name": "Nectar prices",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/special-offers/c:1020312"
+    },
+    {
+      "name": "Bigger packs",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/household-bigger-packs/c:1020255/offer"
+    },
+    {
+      "name": "See all",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/household-bigger-packs/c:1020255"
+    },
+    {
+      "name": "Shop now",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/eco-friendly/c:1020253"
+    },
+    {
+      "name": "stamps",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/newsagent-and-tobacconist/postage-stamps/c:1020297"
+    },
+    {
+      "name": "all purpose cleaners",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/cleaning-products/all-purpose-cleaners/c:1034116"
+    },
+    {
+      "name": "toilet roll",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/toilet-roll-kitchen-roll-and-tissues/toilet-roll/c:1020321"
+    },
+    {
+      "name": "essential toiletries and health",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/toiletries-and-health/toiletries-and-health-essentials/c:1020764"
+    },
+    {
+      "name": "still fruit drinks",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/drinks/squash-and-cordials/still-fruit-drinks/c:1019392"
+    },
+    {
+      "name": "fresh flowers and plants",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/homeware-and-outdoor/fresh-flowers-and-plants/c:1020093"
+    },
+    {
+      "name": "List of Partners (vendors)",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/household/c:1020324#"
+    }
+  ],
+  "Meat Fish": [
+    {
+      "name": "Meat & fish",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/c:1020388"
+    },
+    {
+      "name": "Bacon & sausages",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/bacon-and-sausages/c:1020327"
+    },
+    {
+      "name": "Beef",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/beef/c:1020335"
+    },
+    {
+      "name": "Chicken",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/chicken/c:1020345"
+    },
+    {
+      "name": "Cooked meats, ham and pate",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/cooked-meats-ham-and-pate/c:1020370"
+    },
+    {
+      "name": "Duck",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/duck/c:1054762"
+    },
+    {
+      "name": "Fish & seafood",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/fish-and-seafood/c:1020363"
+    },
+    {
+      "name": "Game and venison",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/game-and-venison/c:1020352"
+    },
+    {
+      "name": "Gammon",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/gammon/c:1054771"
+    },
+    {
+      "name": "Just Cook & Slow Cooked",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/just-cook-and-slow-cooked/c:1020371"
+    },
+    {
+      "name": "Lamb",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/lamb/c:1020376"
+    },
+    {
+      "name": "Meat & fish essentials",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/meat-and-fish-essentials/c:1020377"
+    },
+    {
+      "name": "Meat free",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/meat-free/c:1020378"
+    },
+    {
+      "name": "Online Exclusive",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/online-exclusive/c:1054845"
+    },
+    {
+      "name": "Pork",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/pork/c:1020384"
+    },
+    {
+      "name": "Turkey",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/turkey/c:1054773"
+    },
+    {
+      "name": "Shop all lamb mince",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/lamb/lamb-mince/c:1054763"
+    },
+    {
+      "name": "Shop all mince",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/beef/beef-mince/c:1020329"
+    },
+    {
+      "name": "smoked salmon",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/fish-and-seafood/smoked-salmon-and-smoked-fish/c:1020361"
+    },
+    {
+      "name": "chicken breasts",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/chicken/chicken-breast-and-fillet/c:1020338"
+    },
+    {
+      "name": "roast accompaniments range",
+      "url": "https://www.sainsburys.co.uk/gol-ui/groceries/meat-and-fish/yorkshire-puddings-and-roast-accompaniments/c:1020387"
+    }
+  ],
+  "Offers": [
+    {
+      "name": "Offers page (no fixed subcategories)",
+      "url": "https://www.sainsburys.co.uk/gol-ui/offers"
+    }
+  ]
+}

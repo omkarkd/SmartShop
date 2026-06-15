@@ -1,11 +1,14 @@
+import os
 from pymongo import MongoClient, ASCENDING, DESCENDING
 from datetime import datetime, timezone
 
 
 class AldiDB:
-    def __init__(self, uri="mongodb://localhost:27017", db_name="smartshop"):
-        self.client = MongoClient(uri)
-        self.db = self.client[db_name]
+    def __init__(self, uri=None, db_name=None):
+        self.uri = uri or os.environ.get("MONGO_URI", "mongodb://localhost:27017")
+        self.db_name = db_name or os.environ.get("DB_NAME", "smartshop")
+        self.client = MongoClient(self.uri)
+        self.db = self.client[self.db_name]
         self.products = self.db["aldi_products"]
         self.scrape_log = self.db["aldi_scrape_log"]
         self._ensure_indexes()

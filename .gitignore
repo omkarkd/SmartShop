@@ -32,7 +32,7 @@ Thumbs.db
 *.bson
 *.jsonl
 
-# Scraper data
+# Scraper HTML snapshots & temp data
 scrapper/sainsburys/data/
 scrapper/aldi/data/
 *.html
@@ -41,19 +41,32 @@ page_source.html
 # Jupyter
 .ipynb_checkpoints/
 
+# Notebooks (not needed for scraper Docker image)
+notebook/
+notebooks/
+
+# Web app backend/frontend (not needed for scraper Docker image)
+backend/
+frontend/
+main.py
+
+# Old streamlit app
+app/
+
+# Web app requirements (not needed for scraper Docker image)
+requirements.txt
+
+# Docs
+DEPLOYMENT.md
+
 # Secrets
 cred.txt
 *.key
 *.pem
-
-# Old streamlit app (unused)
-app/food_cupboard.csv
-app/sains_food_cupboard.csv
 
 # Test / temp directories
 test_scraper/
 data/
 
 # Large generated files
-notebook/nlp_output.csv
-notebook/sains_unknown_brands.csv
+*.csv
