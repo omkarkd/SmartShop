@@ -1,24 +1,59 @@
-# macOS
-.DS_Store
-
 # Python
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-*.env
+*.egg-info/
+*.egg
+.eggs/
+dist/
+build/
+
+# Virtual env
 .venv/
 venv/
-ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# MongoDB data
+*.dump
+*.bson
+*.jsonl
+
+# Scraper data
+scrapper/sainsburys/data/
+scrapper/aldi/data/
+*.html
+page_source.html
 
 # Jupyter
 .ipynb_checkpoints/
 
-# VS Code
-.vscode/
+# Secrets
+cred.txt
+*.key
+*.pem
 
-# Local data folder
+# Old streamlit app (unused)
+app/food_cupboard.csv
+app/sains_food_cupboard.csv
+
+# Test / temp directories
+test_scraper/
 data/
 
-# Data files
-*.sqlite
+# Large generated files
+notebook/nlp_output.csv
+notebook/sains_unknown_brands.csv

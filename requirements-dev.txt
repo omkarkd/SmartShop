@@ -1,0 +1,12 @@
+# Scraper dependencies (requires Chrome)
+selenium==4.43.0
+undetected-chromedriver==3.5.5
+
+# Notebook/analysis dependencies
+pandas==2.2.3
+numpy==2.2.4
+matplotlib==3.10.1
+seaborn==0.13.2
+plotly==6.0.1
+duckdb==1.2.1
+nbformat==5.10.4

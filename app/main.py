@@ -83,7 +83,7 @@ df = load_data()
 
 # --- Sidebar Navigation ---
 st.sidebar.title("🛒 SmartShop Admin")
-page = st.sidebar.radio("Navigation", ["Price Finder", "Price History Trends"])
+page = st.sidebar.radio("Navigation", ["Price Finder", "Price History Trends","Common Products"])
 
 # --- SHARED FILTERS (Applicable to both pages) ---
 st.sidebar.divider()
@@ -109,9 +109,38 @@ elif brand_type == "3rd Party":
 
 
 # --- Page 1: Price Finder ---
+# if page == "Price Finder":
+#     st.title("🔎 Price Comparison Search")
+#     search_query = st.text_input("Search for a brand or product (e.g., Shan, Garnier, Milk)")
+
+#     if search_query:
+#         mask = df_filtered['names'].str.contains(search_query, case=False, na=False)
+#         results = df_filtered[mask]
+
+#         if not results.empty:
+#             # Get latest price for each product at each store
+#             latest_idx = results.groupby(['supermarket', 'names'])['date'].idxmax()
+#             final_view = results.loc[latest_idx].sort_values(by='prices_(£)')
+
+#             st.dataframe(
+#                 final_view[['supermarket', 'names', 'prices_(£)', 'date']], 
+#                 column_config={
+#                     "date": st.column_config.DateColumn("Date Updated"),
+#                     "prices_(£)": st.column_config.NumberColumn("Price", format="£%.2f")
+#                 },
+#                 hide_index=True, use_container_width=True
+#             )
+#         else:
+#             st.warning("No matches found in the current datasets.")
+
 if page == "Price Finder":
     st.title("🔎 Price Comparison Search")
+    
+    # 1. Add the Search Bar
     search_query = st.text_input("Search for a brand or product (e.g., Shan, Garnier, Milk)")
+    
+    # 2. Add the "Common Products" Toggle
+    show_common_only = st.checkbox("Show only products available in BOTH stores")
 
     if search_query:
         mask = df_filtered['names'].str.contains(search_query, case=False, na=False)
@@ -120,18 +149,45 @@ if page == "Price Finder":
         if not results.empty:
             # Get latest price for each product at each store
             latest_idx = results.groupby(['supermarket', 'names'])['date'].idxmax()
-            final_view = results.loc[latest_idx].sort_values(by='prices_(£)')
+            latest_df = results.loc[latest_idx]
 
-            st.dataframe(
-                final_view[['supermarket', 'names', 'prices_(£)', 'date']], 
-                column_config={
-                    "date": st.column_config.DateColumn("Date Updated"),
-                    "prices_(£)": st.column_config.NumberColumn("Price", format="£%.2f")
-                },
-                hide_index=True, use_container_width=True
-            )
+            # 3. Pivot the table
+            comparison_df = latest_df.pivot(index='names', columns='supermarket', values='prices_(£)')
+            
+            # Ensure the columns we expect exist (handling case where search only finds one store)
+            available_stores = comparison_df.columns.tolist()
+            
+            # 4. Filter for Common Products if the checkbox is checked
+            if show_common_only:
+                if len(available_stores) >= 2:
+                    # Drop rows that have a NaN (missing price) in ANY of the supermarket columns
+                    comparison_df = comparison_df.dropna()
+                else:
+                    st.info("No common products found because the search query only returned results from one store.")
+                    comparison_df = pd.DataFrame() # Make it empty to skip display
+
+            if not comparison_df.empty:
+                comparison_df = comparison_df.reset_index()
+                
+                # 5. Formatting for display
+                rename_dict = {
+                    'names': 'Product Name',
+                    'ASDA': 'Asda Price',
+                    'Sainsburys': 'Sainsburys Price'
+                }
+                comparison_df = comparison_df.rename(columns=rename_dict)
+                comparison_df = comparison_df.fillna("-")
+
+                st.subheader(f"Results for '{search_query}'")
+                st.dataframe(comparison_df, hide_index=True, use_container_width=True)
+            elif show_common_only:
+                st.warning("No products are sold at both retailers for this search.")
         else:
             st.warning("No matches found in the current datasets.")
+
+
+
+
 
 # --- Page 2: Price History Trends ---
 elif page == "Price History Trends":
@@ -157,3 +213,55 @@ elif page == "Price History Trends":
             labels={"prices_(£)": "Price (£)"}
         )
         st.plotly_chart(fig, use_container_width=True)
+
+# ---- PAGE 3: Common Products Analysis (Optional) ----
+elif page == "Common Products":
+    st.title("🤝 Price Match: Common Products")
+    st.write("This page shows only products that are available in both ASDA and Sainsburys.")
+
+    # 1. Get the latest price for EVERY product in the dataset
+    # We group by supermarket and name to get the most recent entry for each
+    latest_all = df_filtered.groupby(['supermarket', 'names'])['date'].idxmax()
+    df_latest = df_filtered.loc[latest_all]
+
+    # 2. Pivot the data so supermarkets become columns
+    # index = Product Name, columns = Supermarket Names, values = Price
+    comparison_df = df_latest.pivot(index='names', columns='supermarket', values='prices_(£)')
+
+    # 3. Filter for common products
+    # .dropna() removes any row where one of the supermarkets is missing a price
+    common_df = comparison_df.dropna().reset_index()
+
+    if not common_df.empty:
+        # 4. Formatting and renaming
+        rename_dict = {
+            'names': 'Product Name',
+            'ASDA': 'Asda Price',
+            'Sainsburys': 'Sainsburys Price'
+        }
+        common_df = common_df.rename(columns=rename_dict)
+
+        # 5. Add a "Price Difference" column for extra utility
+        if 'Asda Price' in common_df.columns and 'Sainsburys Price' in common_df.columns:
+            common_df['Difference'] = (common_df['Asda Price'] - common_df['Sainsburys Price']).abs()
+            common_df['Cheaper At'] = common_df.apply(
+                lambda row: "Asda" if row['Asda Price'] < row['Sainsburys Price'] 
+                else ("Sainsburys" if row['Sainsburys Price'] < row['Asda Price'] else "Same"), 
+                axis=1
+            )
+
+        st.info(f"Found {len(common_df)} products available in both stores.")
+
+        # 6. Display the table
+        st.dataframe(
+            common_df.sort_values('Product Name'),
+            column_config={
+                "Asda Price": st.column_config.NumberColumn(format="£%.2f"),
+                "Sainsburys Price": st.column_config.NumberColumn(format="£%.2f"),
+                "Difference": st.column_config.NumberColumn(format="£%.2f"),
+            },
+            hide_index=True,
+            use_container_width=True
+        )
+    else:
+        st.warning("No common products found across the datasets.")
