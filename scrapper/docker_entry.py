@@ -8,7 +8,7 @@ def run_sainsburys():
     print("Sainsbury's Scraping Pipeline")
     print("=" * 60)
 
-    sys.path.insert(0, os.path.join(os.path.dirname(__file__), "sainsburys"))
+    sys.path.insert(0, os.path.dirname(__file__))
     from sainsburys.pipeline import load_hierarchy, get_all_urls
     from sainsburys.scraper import scrape_category, create_driver, accept_cookies
     from sainsburys.db import SainsburysDB
