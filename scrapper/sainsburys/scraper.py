@@ -1,5 +1,6 @@
 import os
 import time
+import concurrent.futures
 import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 
@@ -231,7 +232,10 @@ def scrape_page_products(driver, category_name):
     return results
 
 
-def scrape_category(url, category_name, db=None, driver=None, max_loads=20):
+CATEGORY_TIMEOUT = 300  # 5 minutes max per category
+
+
+def _scrape_category_impl(url, category_name, db=None, driver=None, max_loads=20):
     print(f"\n  Scraping: {category_name}")
     print(f"  URL: {url}")
 
@@ -288,3 +292,26 @@ def scrape_category(url, category_name, db=None, driver=None, max_loads=20):
     finally:
         if own_driver:
             driver.quit()
+
+
+def scrape_category(url, category_name, db=None, driver=None, max_loads=20, timeout=CATEGORY_TIMEOUT):
+    if not timeout:
+        return _scrape_category_impl(url, category_name, db=db, driver=driver, max_loads=max_loads)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(
+            _scrape_category_impl, url, category_name,
+            db=db, driver=driver, max_loads=max_loads
+        )
+        try:
+            return future.result(timeout=timeout)
+        except concurrent.futures.TimeoutError:
+            print(f"\n    TIMEOUT after {timeout}s — flagging for retry")
+            if driver:
+                try:
+                    driver.quit()
+                except Exception:
+                    pass
+            if db:
+                db.log_scrape(url, category_name, 0, status="failed", error=f"Timeout after {timeout}s")
+            return 0 if db else []

@@ -3,6 +3,71 @@ import sys
 import time
 
 
+def _recreate_sainsburys_driver(driver):
+    """Check if driver is alive; if dead, return a fresh one with cookies accepted."""
+    try:
+        _ = driver.title
+        return driver
+    except Exception:
+        print(" (recreating driver)", end="", flush=True)
+        try:
+            driver.quit()
+        except Exception:
+            pass
+        time.sleep(3)
+        from sainsburys.scraper import create_driver, accept_cookies
+        driver = create_driver()
+        driver.get("https://www.sainsburys.co.uk/shop/gb/groceries")
+        time.sleep(4)
+        accept_cookies(driver)
+        return driver
+
+
+def _run_urls(urls, db, driver, max_retries=2):
+    total_products = 0
+    success_count = 0
+    fail_count = 0
+    pending = list(urls)
+    total_count = len(urls)
+
+    for retry in range(max_retries + 1):
+        if not pending:
+            break
+
+        if retry > 0:
+            print(f"\n{'─' * 50}")
+            print(f"Retry round {retry}/{max_retries} — {len(pending)} URLs")
+            print(f"{'─' * 50}")
+            driver = _recreate_sainsburys_driver(driver)
+
+        still_pending = []
+        processed = 0
+
+        for name, url in pending:
+            processed += 1
+            idx = f"[{retry * total_count + processed}]" if retry > 0 else f"[{processed}]"
+            print(f"\n{idx}", end="", flush=True)
+            from sainsburys.scraper import scrape_category
+            result = scrape_category(url, name, db=db, driver=driver, max_loads=10)
+
+            if isinstance(result, int):
+                if result > 0:
+                    success_count += 1
+                    total_products += result
+                else:
+                    driver = _recreate_sainsburys_driver(driver)
+                    fail_count += 1
+                    if retry < max_retries:
+                        still_pending.append((name, url))
+            else:
+                success_count += 1
+                total_products += len(result)
+
+        pending = still_pending
+
+    return total_products, success_count, fail_count, pending
+
+
 def run_sainsburys():
     print("=" * 60)
     print("Sainsbury's Scraping Pipeline")
@@ -10,7 +75,7 @@ def run_sainsburys():
 
     sys.path.insert(0, os.path.dirname(__file__))
     from sainsburys.pipeline import load_hierarchy, get_all_urls
-    from sainsburys.scraper import scrape_category, create_driver, accept_cookies
+    from sainsburys.scraper import create_driver, accept_cookies
     from sainsburys.db import SainsburysDB
 
     hierarchy = load_hierarchy()
@@ -39,32 +104,9 @@ def run_sainsburys():
     accept_cookies(driver)
     time.sleep(2)
 
-    total_products = 0
-    success_count = 0
-    fail_count = 0
-
-    for i, (name, url) in enumerate(urls):
-        print(f"\n[{i+1}/{len(urls)}]", end="", flush=True)
-        result = scrape_category(url, name, db=db, driver=driver, max_loads=10)
-        if isinstance(result, int):
-            if result > 0:
-                success_count += 1
-                total_products += result
-            else:
-                try:
-                    driver.title
-                except Exception:
-                    print(" (recreating driver)", end="", flush=True)
-                    driver.quit()
-                    time.sleep(3)
-                    driver = create_driver()
-                    driver.get("https://www.sainsburys.co.uk/shop/gb/groceries")
-                    time.sleep(4)
-                    accept_cookies(driver)
-                fail_count += 1
-        else:
-            success_count += 1
-            total_products += len(result)
+    total_products, success_count, fail_count, still_failed = _run_urls(
+        urls, db, driver, max_retries=2
+    )
 
     driver.quit()
 
@@ -72,6 +114,10 @@ def run_sainsburys():
     print(f"Sainsbury's Pipeline Complete")
     print(f"  Successful: {success_count}")
     print(f"  Failed: {fail_count}")
+    if still_failed:
+        print(f"  Still failed after retries:")
+        for name, url in still_failed:
+            print(f"    - {name}")
     print(f"  Total products: {total_products}")
 
     for s in db.get_category_stats():
@@ -81,13 +127,78 @@ def run_sainsburys():
     return total_products
 
 
+def _recreate_aldi_driver(driver):
+    """Check if Aldi driver is alive; if dead, return a fresh one."""
+    try:
+        _ = driver.title
+        return driver
+    except Exception:
+        print(" (recreating driver)", end="", flush=True)
+        try:
+            driver.quit()
+        except Exception:
+            pass
+        time.sleep(3)
+        from scrapper.aldi.scraper import create_driver
+        driver = create_driver()
+        return driver
+
+
+def _run_aldi_urls(urls, db, driver, max_retries=2):
+    total_products = 0
+    success_count = 0
+    fail_count = 0
+    skip_count = 0
+    pending = list(urls)
+
+    for retry in range(max_retries + 1):
+        if not pending:
+            break
+
+        if retry > 0:
+            print(f"\n{'─' * 50}")
+            print(f"Retry round {retry}/{max_retries} — {len(pending)} URLs")
+            print(f"{'─' * 50}")
+            driver = _recreate_aldi_driver(driver)
+
+        still_pending = []
+
+        for name, url in pending:
+            existing = db.scrape_log.find_one({"url": url, "status": "success"})
+            if existing and retry == 0:
+                count = db.products.count_documents({"category": name})
+                print(f"  - {name} — {count} products (already scraped)")
+                skip_count += 1
+                continue
+
+            from scrapper.aldi.scraper import scrape_category
+            result = scrape_category(url, name, db=db, driver=driver)
+            if isinstance(result, int):
+                if result > 0:
+                    success_count += 1
+                    total_products += result
+                else:
+                    driver = _recreate_aldi_driver(driver)
+                    fail_count += 1
+                    if retry < max_retries:
+                        still_pending.append((name, url))
+            else:
+                success_count += 1
+                total_products += len(result)
+
+        pending = still_pending
+
+    return total_products, success_count, fail_count + skip_count, pending
+
+
 def run_aldi():
     print("=" * 60)
     print("Aldi Scraping Pipeline")
     print("=" * 60)
 
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-    from scrapper.aldi.pipeline import load_categories, scrape_worker
+    from scrapper.aldi.pipeline import load_categories
+    from scrapper.aldi.scraper import create_driver
     from scrapper.aldi.db import AldiDB
 
     categories = load_categories()
@@ -96,36 +207,28 @@ def run_aldi():
     from scrapper.aldi.pipeline import SKIP_PATTERNS
     to_scrape = [c for c in categories
                  if not any(p in c["name"].lower() for p in SKIP_PATTERNS)]
-    skipped = [c for c in categories if any(p in c["name"].lower() for p in SKIP_PATTERNS)]
+    skipped_names = [c["name"] for c in categories if any(p in c["name"].lower() for p in SKIP_PATTERNS)]
 
     print(f"  Active:  {len(to_scrape)} categories")
-    print(f"  Skipped: {len(skipped)} (seasonal/promo)")
+    print(f"  Skipped: {len(skipped_names)} (seasonal/promo)")
 
     db = AldiDB()
-    already = db.scrape_log.count_documents({"status": "success"})
-    print(f"  Already scraped: {already} categories")
-    db.close()
+    driver = create_driver()
 
-    # Run single-threaded in Docker
-    results = scrape_worker(([(c["name"], c["url"]) for c in to_scrape], 1))
+    total_products, success_count, fail_count, still_failed = _run_aldi_urls(
+        [(c["name"], c["url"]) for c in to_scrape], db, driver
+    )
 
-    completed = 0
-    errors = 0
-    for result in results:
-        completed += 1
-        if result["status"] == "success":
-            print(f"  [{completed}/{len(to_scrape)}] {result['name']} — {result['products']} products")
-        elif result["status"] == "skipped":
-            print(f"  [{completed}/{len(to_scrape)}] {result['name']} — {result['products']} products (already scraped)")
-        else:
-            errors += 1
-            print(f"  [{completed}/{len(to_scrape)}] {result['name']} — ERROR: {result.get('error','?')}")
+    driver.quit()
 
     print(f"\n{'=' * 60}")
     print(f"Aldi Pipeline Complete")
-    print(f"  Success: {completed - errors}  |  Errors: {errors}  |  Skipped: {len(skipped)}")
+    print(f"  Success: {success_count}  |  Failed: {fail_count}  |  Skipped: {len(skipped_names)}")
+    if still_failed:
+        print(f"  Still failed after retries:")
+        for name, url in still_failed:
+            print(f"    - {name}")
 
-    db = AldiDB()
     total = db.get_total_product_count()
     cats = db.get_category_stats()
     print(f"  Total products in DB: {total}")
