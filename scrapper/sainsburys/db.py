@@ -1,5 +1,5 @@
 import os
-from pymongo import MongoClient, ASCENDING, DESCENDING
+from pymongo import MongoClient, ASCENDING, DESCENDING, errors
 from datetime import datetime, timezone
 
 
@@ -7,11 +7,32 @@ class SainsburysDB:
     def __init__(self, uri=None, db_name=None):
         self.uri = uri or os.environ.get("MONGO_URI", "mongodb://localhost:27017")
         self.db_name = db_name or os.environ.get("DB_NAME", "smartshop")
-        self.client = MongoClient(self.uri)
+        self._connect()
+
+    def _connect(self):
+        self.client = MongoClient(
+            self.uri,
+            maxIdleTimeMS=60000,
+            connectTimeoutMS=10000,
+            socketTimeoutMS=30000,
+            serverSelectionTimeoutMS=30000,
+        )
         self.db = self.client[self.db_name]
         self.products = self.db["sainsburys_products"]
         self.scrape_log = self.db["sainsburys_scrape_log"]
-        self._ensure_indexes()
+        try:
+            self._ensure_indexes()
+        except Exception:
+            pass
+
+    def _auto_reconnect(self, f, *args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except (errors.ServerSelectionTimeoutError, errors.ConnectionFailure, errors.NetworkTimeout,
+                errors.AutoReconnect, errors.NotPrimaryError, errors.OperationFailure) as e:
+            print(f"    DB connection lost ({e}), reconnecting...")
+            self._connect()
+            return f(*args, **kwargs)
 
     def _ensure_indexes(self):
         self.products.create_index([("url", ASCENDING)], unique=True, sparse=True)
@@ -23,7 +44,9 @@ class SainsburysDB:
     def product_exists(self, url):
         if not url:
             return False
-        return self.products.find_one({"url": url}, {"_id": 1}) is not None
+        return self._auto_reconnect(
+            lambda: self.products.find_one({"url": url}, {"_id": 1}) is not None
+        )
 
     def insert_product(self, product):
         product["scraped_at"] = datetime.now(timezone.utc)
@@ -45,13 +68,15 @@ class SainsburysDB:
         if not products:
             return True
         try:
-            for p in products:
-                self.products.update_one(
-                    {"url": p["url"]},
-                    {"$set": p},
-                    upsert=True
-                )
-            return True
+            def _do_insert():
+                for p in products:
+                    self.products.update_one(
+                        {"url": p["url"]},
+                        {"$set": p},
+                        upsert=True
+                    )
+                return True
+            return self._auto_reconnect(_do_insert)
         except Exception as e:
             print(f"    DB bulk insert error: {e}")
             return False
@@ -67,7 +92,9 @@ class SainsburysDB:
             "scraped_at": datetime.now(timezone.utc)
         }
         try:
-            self.scrape_log.insert_one(entry)
+            def _do_log():
+                self.scrape_log.insert_one(entry)
+            self._auto_reconnect(_do_log)
         except Exception as e:
             print(f"    DB log error: {e}")
 
@@ -82,10 +109,12 @@ class SainsburysDB:
             }},
             {"$sort": {"_id": 1}}
         ]
-        return list(self.products.aggregate(pipeline))
+        return self._auto_reconnect(
+            lambda: list(self.products.aggregate(pipeline))
+        )
 
     def get_total_product_count(self):
-        return self.products.count_documents({})
+        return self._auto_reconnect(lambda: self.products.count_documents({}))
 
     def close(self):
         self.client.close()
