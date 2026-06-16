@@ -19,7 +19,18 @@ def create_driver(retries=3):
                 options.add_argument("--headless=new")
                 options.add_argument("--no-sandbox")
                 options.add_argument("--disable-dev-shm-usage")
-            driver = uc.Chrome(options=options)
+                options.add_argument("--disable-gpu")
+                options.add_argument("--window-size=1920,1080")
+                options.add_argument("--disable-blink-features=AutomationControlled")
+                options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36")
+            kwargs = {"options": options}
+            chromedriver_path = os.environ.get("CHROMEDRIVER_PATH")
+            if chromedriver_path:
+                kwargs["driver_executable_path"] = chromedriver_path
+            version_main = os.environ.get("CHROME_VERSION_MAIN")
+            if version_main:
+                kwargs["version_main"] = int(version_main)
+            driver = uc.Chrome(**kwargs)
             for nav_retry in range(3):
                 try:
                     driver.get("about:blank")

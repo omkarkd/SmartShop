@@ -82,14 +82,29 @@ def create_driver():
     _cleanup_stale_chrome()
     time.sleep(random.uniform(1.0, 3.0))
     options = uc.ChromeOptions()
-    options.headless = os.environ.get("CHROME_HEADLESS", "").lower() in ("1", "true", "yes")
+    is_headless = os.environ.get("CHROME_HEADLESS", "").lower() in ("1", "true", "yes")
+    options.headless = is_headless
+    if is_headless:
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--window-size=1920,1080")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36")
     user_data_dir = tempfile.mkdtemp(prefix=f"aldi_{os.getpid()}_")
     options.add_argument(f"--user-data-dir={user_data_dir}")
     port = random.randint(20000, 60000)
     options.add_argument(f"--remote-debugging-port={port}")
+    kwargs = {"options": options}
+    chromedriver_path = os.environ.get("CHROMEDRIVER_PATH")
+    if chromedriver_path:
+        kwargs["driver_executable_path"] = chromedriver_path
+    version_main = os.environ.get("CHROME_VERSION_MAIN")
+    if version_main:
+        kwargs["version_main"] = int(version_main)
     _acquire_patch_lock()
     try:
-        driver = uc.Chrome(options=options)
+        driver = uc.Chrome(**kwargs)
         return driver
     finally:
         _release_patch_lock()

@@ -1,8 +1,7 @@
 FROM python:3.11-slim
 
-# Install Chromium from Debian (works on both amd64 and arm64)
-# undetected-chromedriver will auto-download matching chromedriver at runtime
-# Debian's chromium-driver is kept as fallback
+# Install dependencies including Chromium + chromedriver from Debian repos
+# chromedriver is provided by Debian matching the exact Chromium build
 RUN apt-get update && apt-get install -y \
     chromium \
     chromium-driver \
@@ -20,8 +19,11 @@ RUN pip install --no-cache-dir --break-system-packages -r /app/requirements-dock
 # Copy scraper code
 COPY scrapper/ /app/scrapper/
 
-# Set to headless mode inside container
+# Set to headless mode inside container; use system chromedriver (UC can't download
+# matching chromedriver for Debian's arm64 Chromium from Google's CDN)
 ENV CHROME_HEADLESS=true
+ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
+ENV CHROME_VERSION_MAIN=149
 
 WORKDIR /app
 
