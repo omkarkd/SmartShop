@@ -3,9 +3,8 @@ services:
     build: .
     image: smartshop-scraper
     container_name: smartshop-scraper
+    env_file: atlas-credentials.env
     environment:
-      - MONGO_URI=${MONGO_URI:-mongodb://host.docker.internal:27017}
-      - DB_NAME=${DB_NAME:-smartshop}
       - RETAILER=${RETAILER:-all}
       - CHROME_HEADLESS=true
     # Give Chrome enough shared memory

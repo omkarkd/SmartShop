@@ -26,6 +26,8 @@ Thumbs.db
 # Environment
 .env
 .env.local
+atlas-credentials.env
+*.env
 
 # MongoDB data
 *.dump
