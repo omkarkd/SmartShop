@@ -28,6 +28,14 @@ def verify_admin(username: str, password: str) -> bool:
     return username == "admin" and password == "admin"
 
 
+def ensure_aware(dt):
+    if dt is None:
+        return None
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=timezone.utc)
+    return dt
+
+
 def login_required():
     if "admin_logged_in" not in st.session_state or not st.session_state.admin_logged_in:
         st.warning("Please login from the home page first")

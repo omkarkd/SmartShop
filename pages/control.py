@@ -4,7 +4,7 @@ import time
 from datetime import datetime, timezone
 from utils import (
     get_db, get_queued_runs, queue_scrape_run, update_queue_status, can_run_scraper,
-    get_active_request, get_scrape_logs, start_scraper_thread
+    get_active_request, get_scrape_logs, start_scraper_thread, ensure_aware
 )
 
 
@@ -25,6 +25,7 @@ def show():
             col2.metric("Retailer", retailer)
             started = active.get("started_at")
             if started:
+                started = ensure_aware(started)
                 elapsed = (datetime.now(timezone.utc) - started).total_seconds()
                 col3.metric("Elapsed", f"{elapsed:.0f}s")
 
