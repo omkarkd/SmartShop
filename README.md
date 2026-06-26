@@ -51,6 +51,9 @@ open http://localhost:8000
 
 ## Admin Dashboard
 
+Two admin interfaces available:
+
+### FastAPI Admin (Web)
 Accessible at **`/admin/`** with credentials `admin` / `admin`.
 
 | Page | Description |
@@ -59,6 +62,21 @@ Accessible at **`/admin/`** with credentials `admin` / `admin`.
 | **Data Collection** | Scraping runs with date/retailer/status filters, per-category timing visualizations |
 | **Database** | MongoDB stats, collections categorized as consumer-facing vs internal |
 | **Service Health** | MongoDB ping latency, dependency checks, server status |
+
+### Streamlit Admin App
+A richer admin interface at **`http://localhost:8501`** with the same credentials.
+
+```bash
+# Start the Streamlit admin app
+streamlit run admin_app.py
+```
+
+| Tab | Description |
+|-----|-------------|
+| **Dashboard** | Stats cards (runs, products, categories, DB size), today's activity, run history |
+| **Scraping Runs** | Filterable run history with pagination, per-category timing bar charts, run detail viewer |
+| **Database** | DB size stats, collections split by consumer/internal with bar chart visualization |
+| **Scraper Control** | Start scraping on-click (queues to MongoDB, runs via subprocess if Chrome available), schedule config, run queue history |
 
 ## Performance Metrics
 
@@ -70,6 +88,7 @@ API endpoints tracked in real-time via ASGI middleware:
 - **Active requests** — current in-flight gauge
 
 Endpoints:
+
 - `GET /api/metrics` — JSON snapshot
 - `GET /metrics` — Prometheus format
 
@@ -95,20 +114,20 @@ Per-category timing and run metrics are recorded to MongoDB `performance_metrics
 
 ## API Endpoints
 
-| Endpoint | Description |
-|----------|-------------|
-| `POST /api/auth/signup` | Create account |
-| `POST /api/auth/login` | Login (returns JWT) |
-| `GET /api/products/search?q=` | Search products |
-| `GET /api/products/categories` | List categories |
-| `GET /api/products/category/{name}` | Browse by category |
-| `POST /api/cart/create` | Create cart |
-| `GET /api/cart/active` | Active cart with matched prices |
-| `POST /api/cart/add` | Add item to cart |
-| `GET /api/admin/dashboard` | Admin dashboard overview |
-| `GET /api/admin/scraping-runs` | Scraping run history |
-| `GET /api/admin/database` | MongoDB collection stats |
-| `GET /api/admin/health` | Service health checks |
+| Endpoint                              | Description                     |
+| ------------------------------------- | ------------------------------- |
+| `POST /api/auth/signup`             | Create account                  |
+| `POST /api/auth/login`              | Login (returns JWT)             |
+| `GET /api/products/search?q=`       | Search products                 |
+| `GET /api/products/categories`      | List categories                 |
+| `GET /api/products/category/{name}` | Browse by category              |
+| `POST /api/cart/create`             | Create cart                     |
+| `GET /api/cart/active`              | Active cart with matched prices |
+| `POST /api/cart/add`                | Add item to cart                |
+| `GET /api/admin/dashboard`          | Admin dashboard overview        |
+| `GET /api/admin/scraping-runs`      | Scraping run history            |
+| `GET /api/admin/database`           | MongoDB collection stats        |
+| `GET /api/admin/health`             | Service health checks           |
 
 ## Database
 
@@ -126,18 +145,18 @@ Recommended stack: **VPS + MongoDB Atlas** (Option B in deployment guide).
 
 ## Project Status
 
-- [x] FastAPI backend with full REST API
-- [x] Web frontend (vanilla HTML/CSS/JS)
-- [x] Aldi scraper (Dockerized)
-- [x] Sainsbury's scraper (Dockerized)
-- [x] Cross-retailer product matching
-- [x] Brand extraction pipeline
-- [x] Nectar price integration
-- [x] JWT authentication
-- [x] Performance metrics middleware
-- [x] Prometheus `/metrics` endpoint
-- [x] Admin dashboard
-- [x] Per-category scraper timing
+- [X] FastAPI backend with full REST API
+- [X] Web frontend (vanilla HTML/CSS/JS)
+- [X] Aldi scraper (Dockerized)
+- [X] Sainsbury's scraper (Dockerized)
+- [X] Cross-retailer product matching
+- [X] Brand extraction pipeline
+- [X] Nectar price integration
+- [X] JWT authentication
+- [X] Performance metrics middleware
+- [X] Prometheus `/metrics` endpoint
+- [X] Admin dashboard
+- [X] Per-category scraper timing
 - [ ] Automated testing
 - [ ] CI/CD pipeline
 - [ ] Price history tracking
