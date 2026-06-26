@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import time
+import os
 from datetime import datetime, timezone
 from utils import (
     get_db, get_queued_runs, queue_scrape_run, update_queue_status, can_run_scraper,
@@ -63,6 +64,18 @@ def show():
                             horizontal=True, key="ctrl_retailer")
 
         chrome_ok, chrome_path = can_run_scraper()
+
+        # Detect if running on Streamlit Cloud (no Chrome available)
+        on_cloud = "STREAMLIT_CLOUD" in os.environ or "STREAMLIT_RUN_ON_SAVE" in os.environ or not chrome_ok and "STREAMLIT_" in str(os.environ.get("SERVER_SOFTWARE", ""))
+
+        if on_cloud:
+            st.info(
+                "  **Streamlit Cloud detected.** Scraping requires Chrome/Chromium "
+                "and cannot run here. Use the Docker container locally:\n\n"
+                "```bash\n"
+                "docker-compose run admin\n"
+                "```"
+            )
         if chrome_ok:
             st.success(f" Chrome detected: {chrome_path}")
         else:

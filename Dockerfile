@@ -13,16 +13,16 @@ RUN pip install --no-cache-dir --upgrade pip
 
 WORKDIR /app
 
-# Install dependencies (requirements-docker-full.txt has ALL deps)
-COPY requirements-docker-full.txt /app/requirements-docker-full.txt
-RUN pip install --no-cache-dir -r /app/requirements-docker-full.txt
-RUN rm /app/requirements-docker-full.txt
+# Install dependencies
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN rm /app/requirements.txt
 
 # Copy entire application
 COPY . /app/
 
 # Remove files not needed in container
-RUN rm -f /app/requirements-docker.txt /app/requirements-dev.txt /app/atlas-credentials.env /app/cred.txt /app/.dockerignore
+RUN rm -f /app/requirements-docker-full.txt /app/requirements-docker.txt /app/requirements-dev.txt /app/atlas-credentials.env /app/cred.txt /app/.dockerignore /app/.streamlit/secrets.toml
 
 # Chrome headless mode for container
 ENV CHROME_HEADLESS=true
@@ -30,8 +30,8 @@ ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
 ENV CHROME_VERSION_MAIN=149
 ENV PYTHONUNBUFFERED=1
 
-# Default MongoDB connection (host.docker.internal reaches host from container)
-ENV MONGO_URI=mongodb://host.docker.internal:27017
+# Default MongoDB connection (override with env var for local or Atlas)
+ENV MONGO_URI=mongodb+srv://kadamomkar05_db_user:h4fc1e5VeHkcvu7K@initial-data-dump1.qxe6ie5.mongodb.net/smartshop?retryWrites=true&w=majority
 ENV DB_NAME=smartshop
 
 EXPOSE 8501

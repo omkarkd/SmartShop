@@ -1,8 +1,25 @@
+# FastAPI backend
 fastapi==0.137.1
 uvicorn[standard]==0.49.0
-pymongo==4.16.0
 pydantic==2.12.5
 python-multipart==0.0.32
+
+# Auth
 passlib[bcrypt]==1.7.4
 bcrypt==5.0.0
+python-jose[cryptography]>=3.3.0
+
+# Metrics
 prometheus-client==0.21.1
+
+# Database
+pymongo==4.16.0
+
+# Admin dashboard (Streamlit Cloud)
+streamlit>=1.28.0
+pandas>=2.0.0
+plotly>=5.0.0
+
+# Scraper (used when running locally / Docker)
+selenium==4.43.0
+undetected-chromedriver==3.5.5

@@ -6,10 +6,8 @@ services:
     ports:
       - "8501:8501"
     environment:
-      - MONGO_URI=${MONGO_URI:-mongodb://host.docker.internal:27017}
+      - MONGO_URI=${MONGO_URI:-mongodb+srv://kadamomkar05_db_user:h4fc1e5VeHkcvu7K@initial-data-dump1.qxe6ie5.mongodb.net/smartshop?retryWrites=true&w=majority}
       - DB_NAME=${DB_NAME:-smartshop}
       - CHROME_HEADLESS=true
     shm_size: 2gb
     restart: unless-stopped
-    extra_hosts:
-      - "host.docker.internal:host-gateway"

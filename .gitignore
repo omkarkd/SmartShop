@@ -56,6 +56,7 @@ app/
 cred.txt
 *.key
 *.pem
+.streamlit/secrets.toml
 
 # Test / experimental directories
 test_scraper/

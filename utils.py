@@ -7,21 +7,35 @@ import shutil
 from datetime import datetime, timezone
 from typing import Optional
 from pymongo import MongoClient, DESCENDING
-import streamlit as st
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DB_NAME = os.getenv("DB_NAME", "smartshop")
+MONGO_URI = None
+DB_NAME = None
 
 _client = None
 
 _SCRAPER_THREADS = {}
 
 
+def _get_config():
+    global MONGO_URI, DB_NAME
+    if MONGO_URI is not None:
+        return MONGO_URI, DB_NAME
+    try:
+        import streamlit as st
+        MONGO_URI = st.secrets.get("MONGO_URI", os.getenv("MONGO_URI", "mongodb://localhost:27017"))
+        DB_NAME = st.secrets.get("DB_NAME", os.getenv("DB_NAME", "smartshop"))
+    except Exception:
+        MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+        DB_NAME = os.getenv("DB_NAME", "smartshop")
+    return MONGO_URI, DB_NAME
+
+
 def get_db():
     global _client
+    uri, db_name = _get_config()
     if _client is None:
-        _client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
-    return _client[DB_NAME]
+        _client = MongoClient(uri, serverSelectionTimeoutMS=5000)
+    return _client[db_name]
 
 
 def verify_admin(username: str, password: str) -> bool:
@@ -276,10 +290,11 @@ def run_scraper_background(request_id: str, retailer: str):
         _log(f"Starting scraper for {retailer}...")
         update_queue_status(request_id, "running", started_at=datetime.now(timezone.utc))
 
+        mongo_uri, db_name = _get_config()
         env = os.environ.copy()
         env["RETAILER"] = retailer
-        env["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-        env["DB_NAME"] = os.getenv("DB_NAME", "smartshop")
+        env["MONGO_URI"] = mongo_uri
+        env["DB_NAME"] = db_name
         env["CHROME_HEADLESS"] = "true"
         env["PYTHONUNBUFFERED"] = "1"
         env["PYTHONPATH"] = PROJECT_DIR
