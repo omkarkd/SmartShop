@@ -274,6 +274,7 @@ def run_scraper_background(request_id: str, retailer: str):
         env["DB_NAME"] = os.getenv("DB_NAME", "smartshop")
         env["CHROME_HEADLESS"] = "true"
         env["PYTHONUNBUFFERED"] = "1"
+        env["PYTHONPATH"] = PROJECT_DIR
 
         proc = subprocess.Popen(
             [sys.executable, "-m", "scrapper.docker_entry"],

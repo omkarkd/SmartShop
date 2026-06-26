@@ -1,7 +1,5 @@
 FROM python:3.11-slim
 
-# Install dependencies including Chromium + chromedriver from Debian repos
-# chromedriver is provided by Debian matching the exact Chromium build
 RUN apt-get update && apt-get install -y \
     chromium \
     chromium-driver \
@@ -11,21 +9,31 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python deps (scraper only: selenium, uc, pymongo)
-COPY requirements-docker.txt /app/requirements-docker.txt
-RUN pip install --no-cache-dir --break-system-packages -r /app/requirements-docker.txt 2>/dev/null \
-    || pip install --no-cache-dir -r /app/requirements-docker.txt
+RUN pip install --no-cache-dir --upgrade pip
 
-# Copy scraper code
-COPY scrapper/ /app/scrapper/
+WORKDIR /app
 
-# Set to headless mode inside container; use system chromedriver (UC can't download
-# matching chromedriver for Debian's arm64 Chromium from Google's CDN)
+# Install dependencies (requirements-docker-full.txt has ALL deps)
+COPY requirements-docker-full.txt /app/requirements-docker-full.txt
+RUN pip install --no-cache-dir -r /app/requirements-docker-full.txt
+RUN rm /app/requirements-docker-full.txt
+
+# Copy entire application
+COPY . /app/
+
+# Remove files not needed in container
+RUN rm -f /app/requirements-docker.txt /app/requirements-dev.txt /app/atlas-credentials.env /app/cred.txt /app/.dockerignore
+
+# Chrome headless mode for container
 ENV CHROME_HEADLESS=true
 ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
 ENV CHROME_VERSION_MAIN=149
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /app
+# Default MongoDB connection (host.docker.internal reaches host from container)
+ENV MONGO_URI=mongodb://host.docker.internal:27017
+ENV DB_NAME=smartshop
 
-ENTRYPOINT ["python", "-m", "scrapper.docker_entry"]
+EXPOSE 8501
+
+ENTRYPOINT ["streamlit", "run", "admin_app.py", "--server.port=8501", "--server.headless=true", "--server.address=0.0.0.0"]

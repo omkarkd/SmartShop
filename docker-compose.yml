@@ -1,13 +1,15 @@
 services:
-  scraper:
+  admin:
     build: .
-    image: smartshop-scraper
-    container_name: smartshop-scraper
-    env_file: atlas-credentials.env
+    image: smartshop-admin
+    container_name: smartshop-admin
+    ports:
+      - "8501:8501"
     environment:
-      - RETAILER=${RETAILER:-all}
+      - MONGO_URI=${MONGO_URI:-mongodb://host.docker.internal:27017}
+      - DB_NAME=${DB_NAME:-smartshop}
       - CHROME_HEADLESS=true
-    # Give Chrome enough shared memory
     shm_size: 2gb
-    # Restart on crash (network blips, etc.)
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
