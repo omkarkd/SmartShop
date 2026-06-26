@@ -1,103 +1,113 @@
 import streamlit as st
 import pandas as pd
 import time
-import threading
-import subprocess
-import sys
-import os
 from datetime import datetime, timezone
-from bson.objectid import ObjectId
-from utils import get_db, get_queued_runs, queue_scrape_run, update_queue_status, can_run_scraper
-
-
-def _run_scraper(retailer: str, request_id: str):
-    from utils import get_db
-    db = get_db()
-    try:
-        update_queue_status(request_id, "running", started_at=datetime.now(timezone.utc))
-        env = os.environ.copy()
-        env["RETAILER"] = retailer
-        env["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-        env["DB_NAME"] = os.getenv("DB_NAME", "smartshop")
-        env["CHROME_HEADLESS"] = "true"
-        result = subprocess.run(
-            [sys.executable, "-m", "scrapper.docker_entry"],
-            capture_output=True, text=True, timeout=7200,
-            env=env, cwd=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        )
-        update_queue_status(request_id, "completed",
-                            completed_at=datetime.now(timezone.utc),
-                            output=result.stdout[-2000:] if result.stdout else "",
-                            errors=result.stderr[-2000:] if result.stderr else "")
-    except subprocess.TimeoutExpired:
-        update_queue_status(request_id, "timeout",
-                            completed_at=datetime.now(timezone.utc))
-    except Exception as e:
-        update_queue_status(request_id, "failed",
-                            completed_at=datetime.now(timezone.utc),
-                            errors=str(e))
+from utils import (
+    get_db, get_queued_runs, queue_scrape_run, update_queue_status, can_run_scraper,
+    get_active_request, get_scrape_logs, start_scraper_thread
+)
 
 
 def show():
     st.subheader("Scraper Control")
 
-    tab1, tab2, tab3 = st.tabs(["Start Scraping", "Schedule", "Run History"])
+    # ── Live Progress Section ──
+    active = get_active_request()
+    if active:
+        status = active.get("status", "?")
+        rid = str(active.get("_id"))
+        retailer = active.get("retailer", "?")
+
+        if status == "running":
+            st.markdown("###  Active Scraping Run")
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Status", "Running", delta="In Progress")
+            col2.metric("Retailer", retailer)
+            started = active.get("started_at")
+            if started:
+                elapsed = (datetime.now(timezone.utc) - started).total_seconds()
+                col3.metric("Elapsed", f"{elapsed:.0f}s")
+
+            st.progress(0.5, text="Scraping in progress...")
+
+            logs = get_scrape_logs(rid)
+            if logs:
+                with st.expander("Live Logs", expanded=True):
+                    log_text = "\n".join(logs[-50:])
+                    st.code(log_text, language="bash")
+
+            st.markdown("---")
+            if st.button(" Refresh Status"):
+                st.rerun()
+
+            time.sleep(3)
+            st.rerun()
+
+        elif status == "queued":
+            st.info(f" Run for **{retailer}** is queued — waiting for a worker to pick it up.")
+            if st.button(" Check Status"):
+                st.rerun()
+            time.sleep(3)
+            st.rerun()
+
+    # ── Tabs ──
+    tab1, tab2, tab3 = st.tabs(["Start Scraping", "Schedule", "Run Queue"])
 
     with tab1:
         st.markdown("### Start a Scraping Run")
 
         retailer = st.radio("Select retailer", ["all", "aldi", "sainsburys"],
                             format_func=lambda x: {"all": "Both Retailers", "aldi": "Aldi",
-                                                   "sainsburys": "Sainsbury's"}[x],
-                            horizontal=True)
+                                                   "sainsburys": "Sainbury's"}[x],
+                            horizontal=True, key="ctrl_retailer")
 
-        st.info(
-            "Starting a scrape will run the Selenium scraper which requires Chrome/Chromium. "
-            "If Chrome is not available locally, the run will be queued for the Docker container."
-        )
+        chrome_ok, chrome_path = can_run_scraper()
+        if chrome_ok:
+            st.success(f" Chrome detected: {chrome_path}")
+        else:
+            st.warning(
+                "Chrome/Chromium is not installed on this machine. "
+                "Scraping will be queued for the Docker container.\n\n"
+                "To run locally, install Chrome:\n"
+                "```bash\nbrew install --cask google-chrome\n```"
+            )
 
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns([1, 1])
         with col1:
             if st.button(" Start Scraping Now", type="primary", use_container_width=True):
-                entry = queue_scrape_run(retailer)
-                request_id = str(entry.inserted_id) if hasattr(entry, "inserted_id") else None
-
-                chrome_ok = can_run_scraper()
-                if chrome_ok:
-                    st.success(f"Starting scraper for {retailer}...")
-                    thread = threading.Thread(
-                        target=_run_scraper, args=(retailer, request_id), daemon=True
-                    )
-                    thread.start()
-                    st.info("Scraper started in background. Check Run History tab for progress.")
+                request_id = queue_scrape_run(retailer)
+                if request_id:
+                    if chrome_ok:
+                        st.success(f"Starting scraper for {retailer}...")
+                        start_scraper_thread(request_id, retailer)
+                        st.info("Scroll up to see live progress above.")
+                    else:
+                        st.info(
+                            f"Run queued (ID: {request_id[:8]}...). "
+                            "Use the Docker container to process:\n\n"
+                            "```bash\nMONGO_URI=... docker-compose run scraper\n```"
+                        )
                 else:
-                    st.warning(
-                        "Chrome is not available on this machine. "
-                        "The run has been queued in MongoDB (`scrape_requests` collection). "
-                        "Use the Docker container to process it:\n\n"
-                        "```bash\n"
-                        "docker-compose run scraper\n"
-                        "```"
-                    )
-                time.sleep(1)
+                    st.error("Failed to queue run")
+                time.sleep(2)
                 st.rerun()
 
         with col2:
-            st.markdown("#### Quick Run Options")
-            st.markdown("- **Both retailers** (default) — scrapes Aldi then Sainsbury's")
-            st.markdown("- **Single retailer** — scrapes only the selected retailer")
-            st.markdown("- Runs are tracked in MongoDB with per-category timing")
+            st.markdown("**Quick Info**")
+            st.markdown("- Full scrape: ~5-15 minutes per retailer")
+            st.markdown("- Skips previously scraped categories")
+            st.markdown("- Per-category timing recorded in MongoDB")
+            st.markdown("- Live logs appear above while running")
 
     with tab2:
         st.markdown("### Schedule Configuration")
 
         st.info(
-            "Scheduling is configured via environment or cron. "
-            "The recommended approach is to set up a systemd timer or cron job "
-            "that runs the Docker container at your desired intervals."
+            "Scheduling is handled via cron/systemd on your server. "
+            "The Docker container runs the scraper; a cron job triggers it at set intervals."
         )
 
-        st.markdown("#### Recommended Schedule")
+        st.markdown("#### Recommended Schedule (Twice Daily)")
         schedule_df = pd.DataFrame([
             {"Run": "Morning", "Time": "06:00 UTC", "Retailer": "all",
              "Command": "docker-compose run scraper"},
@@ -110,51 +120,48 @@ def show():
         st.code(
             "# Run twice daily (6 AM and 6 PM UTC)\n"
             "0 6,18 * * * cd /path/to/SmartShop && docker-compose run scraper\n\n"
-            "# Or with specific retailer\n"
+            "# Run Aldi in morning, Sainbury's in evening\n"
             "0 6 * * * cd /path/to/SmartShop && RETAILER=aldi docker-compose run scraper\n"
             "0 18 * * * cd /path/to/SmartShop && RETAILER=sainsburys docker-compose run scraper",
             language="bash"
         )
 
-        st.markdown("#### Schedule Jobs")
-        db = get_db()
-        schedules = list(db["performance_metrics"].find({"type": "schedule"}).sort("created_at", -1))
-        if schedules:
-            rows = []
-            for s in schedules:
-                rows.append({
-                    "Retailer": s.get("retailer", "all"),
-                    "Cron Expression": s.get("cron", "-"),
-                    "Created": str(s.get("created_at", ""))[:19],
-                    "Active": "Yes" if s.get("active") else "No",
-                })
-            st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
-        else:
-            st.info("No schedules configured. Use cron on your server (see above).")
-
     with tab3:
-        st.markdown("### Run History")
-        runs = get_queued_runs()
+        st.markdown("### Run Queue History")
+        runs = get_queued_runs(100)
         if runs:
             rows = []
+            status_colors = {"queued": " ", "running": " ", "completed": " ✅",
+                             "failed": " ❌", "timeout": " ⏰"}
             for r in runs:
+                s = r.get("status", "?")
+                icon = status_colors.get(s, " ❓")
                 rows.append({
+                    "ID": str(r.get("_id"))[:8],
                     "Time": str(r.get("created_at", ""))[:19],
                     "Retailer": r.get("retailer", ""),
-                    "Status": r.get("status", ""),
+                    "Status": f"{icon} {s}",
                     "Started": str(r.get("started_at", ""))[:19] if r.get("started_at") else "-",
                     "Completed": str(r.get("completed_at", ""))[:19] if r.get("completed_at") else "-",
+                    "_log": r.get("log", []),
                 })
             df = pd.DataFrame(rows)
-            st.dataframe(df, use_container_width=True, hide_index=True)
 
-            selected = st.selectbox("View details", options=range(len(runs)),
-                                    format_func=lambda i: f"Run {i+1}: {runs[i].get('status', '?')}")
-            if runs[selected].get("output"):
-                with st.expander("Output"):
-                    st.code(runs[selected]["output"][-3000:])
-            if runs[selected].get("errors"):
-                with st.expander("Errors"):
-                    st.code(runs[selected]["errors"][-3000:])
+            display_cols = ["Time", "Retailer", "Status", "Started", "Completed"]
+            st.dataframe(df[display_cols], use_container_width=True, hide_index=True)
+
+            selected_idx = st.selectbox(
+                "View run logs",
+                options=range(len(rows)),
+                format_func=lambda i: f"{rows[i]['ID']} — {rows[i]['Retailer']} — {rows[i]['Status']}",
+                key="queue_log_select"
+            )
+            selected = rows[selected_idx]
+            logs = selected.get("_log", [])
+            if logs:
+                with st.expander(f"Logs for run {selected['ID']}", expanded=True):
+                    st.code("\n".join(logs[-200:]), language="bash")
+            else:
+                st.info("No logs for this run (may still be queued or logs not captured)")
         else:
             st.info("No runs have been queued yet")

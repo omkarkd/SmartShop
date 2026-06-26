@@ -3,16 +3,18 @@ import time
 import threading
 import subprocess
 import sys
+import shutil
 from datetime import datetime, timezone
 from typing import Optional
 from pymongo import MongoClient, DESCENDING
-import bcrypt
 import streamlit as st
 
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 DB_NAME = os.getenv("DB_NAME", "smartshop")
 
 _client = None
+
+_SCRAPER_THREADS = {}
 
 
 def get_db():
@@ -32,6 +34,8 @@ def login_required():
         st.stop()
 
 
+# ── Dashboard ──
+
 def get_dashboard_overview():
     db = get_db()
     now = datetime.now(timezone.utc)
@@ -39,27 +43,25 @@ def get_dashboard_overview():
 
     results = {}
 
-    run_pipeline = [
-        {"$match": {"type": "scraper_run"}},
-        {"$sort": {"timestamp": -1}},
-        {"$group": {
-            "_id": "$retailer",
-            "last_run": {"$first": "$timestamp"},
-            "last_status": {"$first": "$status"},
-            "last_products": {"$first": "$products_total"},
-            "last_duration": {"$first": "$duration_seconds"},
-            "total_runs": {"$sum": 1},
-            "avg_products": {"$avg": "$products_total"},
-        }}
-    ]
     try:
-        results["scraper_summary"] = list(db["performance_metrics"].aggregate(run_pipeline))
-    except Exception as e:
+        results["scraper_summary"] = list(db["performance_metrics"].aggregate([
+            {"$match": {"type": "scraper_run"}},
+            {"$sort": {"timestamp": -1}},
+            {"$group": {
+                "_id": "$retailer",
+                "last_run": {"$first": "$timestamp"},
+                "last_status": {"$first": "$status"},
+                "last_products": {"$first": "$products_total"},
+                "last_duration": {"$first": "$duration_seconds"},
+                "total_runs": {"$sum": 1},
+                "avg_products": {"$avg": "$products_total"},
+            }}
+        ]))
+    except Exception:
         results["scraper_summary"] = []
-        results["_error"] = str(e)
 
     try:
-        today_cats = list(db["performance_metrics"].aggregate([
+        results["today_category_stats"] = list(db["performance_metrics"].aggregate([
             {"$match": {"type": "category_scrape", "timestamp": {"$gte": today_start}}},
             {"$group": {
                 "_id": "$retailer",
@@ -68,7 +70,6 @@ def get_dashboard_overview():
                 "total_products_found": {"$sum": "$product_count"},
             }}
         ]))
-        results["today_category_stats"] = today_cats
     except Exception:
         results["today_category_stats"] = []
 
@@ -118,12 +119,9 @@ def _get_collection_info(db):
         info.append({"name": name, "type": "consumer", "description": desc, "documents": count})
     for name, desc in internal.items():
         try:
-            count = db[name].count_documents({})
+            count = db[name].count_documents({}) if name in db.list_collection_names() else 0
         except Exception:
-            if name == "scrape_requests":
-                count = 0
-            else:
-                count = 0
+            count = 0
         info.append({"name": name, "type": "internal", "description": desc, "documents": count})
     return info
 
@@ -135,6 +133,8 @@ def _bytes_to_human(b):
         b /= 1024
     return f"{b:.1f} TB"
 
+
+# ── Scraping Runs ──
 
 def get_scraping_runs(date_from=None, date_to=None, retailer=None, status=None, page=1, per_page=20):
     db = get_db()
@@ -188,11 +188,9 @@ def get_run_detail(run_id: str) -> dict:
         return {"error": str(e)}
 
 
-QUEUED_RUNS = {}
-RUNNER_THREAD = None
+# ── Scrape Queue / Runner ──
 
-
-def queue_scrape_run(retailer: str, scheduled: bool = False):
+def queue_scrape_run(retailer: str, scheduled: bool = False) -> Optional[str]:
     db = get_db()
     entry = {
         "type": "scrape_request",
@@ -202,15 +200,38 @@ def queue_scrape_run(retailer: str, scheduled: bool = False):
         "created_at": datetime.now(timezone.utc),
         "started_at": None,
         "completed_at": None,
+        "log": [],
     }
-    db["scrape_requests"].insert_one(entry)
-    return entry
+    result = db["scrape_requests"].insert_one(entry)
+    return str(result.inserted_id)
 
 
-def get_queued_runs():
+def append_scrape_log(request_id: str, line: str):
+    from bson.objectid import ObjectId
+    try:
+        db = get_db()
+        db["scrape_requests"].update_one(
+            {"_id": ObjectId(request_id)},
+            {"$push": {"log": line}}
+        )
+    except Exception:
+        pass
+
+
+def get_scrape_logs(request_id: str) -> list:
+    from bson.objectid import ObjectId
+    try:
+        db = get_db()
+        doc = db["scrape_requests"].find_one({"_id": ObjectId(request_id)})
+        return doc.get("log", []) if doc else []
+    except Exception:
+        return []
+
+
+def get_queued_runs(limit: int = 50):
     db = get_db()
     try:
-        return list(db["scrape_requests"].find().sort("created_at", DESCENDING).limit(50))
+        return list(db["scrape_requests"].find().sort("created_at", DESCENDING).limit(limit))
     except Exception:
         return []
 
@@ -222,12 +243,107 @@ def update_queue_status(request_id, status, **kwargs):
     db["scrape_requests"].update_one({"_id": ObjectId(request_id)}, update)
 
 
-def can_run_scraper():
+def get_active_request() -> Optional[dict]:
+    db = get_db()
+    try:
+        doc = db["scrape_requests"].find_one(
+            {"status": {"$in": ["queued", "running"]}},
+            sort=[("created_at", DESCENDING)]
+        )
+        return doc
+    except Exception:
+        return None
+
+
+def run_scraper_background(request_id: str, retailer: str):
+    db = get_db()
+    PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+    def _log(line):
+        with open("/tmp/scraper_progress.log", "a") as f:
+            f.write(f"[{request_id[:8]}] {line}\n")
+        append_scrape_log(request_id, line)
+
+    try:
+        _log(f"Starting scraper for {retailer}...")
+        update_queue_status(request_id, "running", started_at=datetime.now(timezone.utc))
+
+        env = os.environ.copy()
+        env["RETAILER"] = retailer
+        env["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+        env["DB_NAME"] = os.getenv("DB_NAME", "smartshop")
+        env["CHROME_HEADLESS"] = "true"
+        env["PYTHONUNBUFFERED"] = "1"
+
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "scrapper.docker_entry"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+            env=env,
+            cwd=PROJECT_DIR,
+        )
+
+        for raw_line in iter(proc.stdout.readline, ""):
+            line = raw_line.rstrip("\n\r")
+            if line:
+                print(line, flush=True)
+                _log(line)
+
+        proc.wait()
+        exit_code = proc.returncode
+
+        if exit_code == 0:
+            _log(f"Scraper completed successfully (exit code {exit_code})")
+            update_queue_status(request_id, "completed",
+                                completed_at=datetime.now(timezone.utc))
+        else:
+            _log(f"Scraper finished with exit code {exit_code}")
+            update_queue_status(request_id, "failed",
+                                completed_at=datetime.now(timezone.utc),
+                                exit_code=exit_code)
+
+    except Exception as e:
+        err = f"Scraper error: {e}"
+        _log(err)
+        update_queue_status(request_id, "failed",
+                            completed_at=datetime.now(timezone.utc),
+                            error=str(e))
+
+
+def start_scraper_thread(request_id: str, retailer: str):
+    thread = threading.Thread(
+        target=run_scraper_background,
+        args=(request_id, retailer),
+        daemon=True,
+        name=f"scraper-{request_id[:8]}",
+    )
+    _SCRAPER_THREADS[request_id] = thread
+    thread.start()
+    return thread
+
+
+def can_run_scraper() -> tuple:
+    chrome_binary = (
+        shutil.which("google-chrome") or
+        shutil.which("google-chrome-stable") or
+        shutil.which("chromium-browser") or
+        shutil.which("chromium") or
+        shutil.which("/usr/bin/chromium") or
+        (os.path.isfile("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
+         and "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome") or
+        None
+    )
+    if chrome_binary:
+        return (True, chrome_binary)
     try:
         result = subprocess.run(
-            ["python", "-c", "import undetected_chromedriver; print('ok')"],
+            [sys.executable, "-c", "import undetected_chromedriver; print('ok')"],
             capture_output=True, text=True, timeout=10
         )
-        return result.returncode == 0
+        if result.returncode == 0:
+            return (True, "undetected_chromedriver (Chrome auto-download)")
     except Exception:
-        return False
+        pass
+    return (False, None)
