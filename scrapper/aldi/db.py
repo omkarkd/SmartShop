@@ -13,9 +13,10 @@ class AldiDB:
         self.client = MongoClient(
             self.uri,
             maxIdleTimeMS=60000,
-            connectTimeoutMS=10000,
-            socketTimeoutMS=30000,
-            serverSelectionTimeoutMS=30000,
+            connectTimeoutMS=15000,
+            socketTimeoutMS=60000,
+            serverSelectionTimeoutMS=60000,
+            tlsInsecure=True,
         )
         self.db = self.client[self.db_name]
         self.products = self.db["aldi_products"]
@@ -26,13 +27,20 @@ class AldiDB:
             pass
 
     def _auto_reconnect(self, f, *args, **kwargs):
-        try:
-            return f(*args, **kwargs)
-        except (errors.ServerSelectionTimeoutError, errors.ConnectionFailure, errors.NetworkTimeout,
-                errors.AutoReconnect, errors.NotPrimaryError, errors.OperationFailure) as e:
-            print(f"    DB connection lost ({e}), reconnecting...")
-            self._connect()
-            return f(*args, **kwargs)
+        max_attempts = 4
+        for attempt in range(max_attempts):
+            try:
+                return f(*args, **kwargs)
+            except (errors.ServerSelectionTimeoutError, errors.ConnectionFailure, errors.NetworkTimeout,
+                    errors.AutoReconnect, errors.NotPrimaryError, errors.OperationFailure) as e:
+                if attempt < max_attempts - 1:
+                    print(f"    DB connection lost (attempt {attempt+1}/{max_attempts}: {e})")
+                    import time
+                    time.sleep(2 ** attempt)
+                    self._connect()
+                else:
+                    print(f"    DB connection lost — all {max_attempts} attempts failed")
+                    raise
 
     def _ensure_indexes(self):
         self.products.create_index([("url", ASCENDING)], unique=True, sparse=True)

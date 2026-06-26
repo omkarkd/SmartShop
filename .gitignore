@@ -37,7 +37,9 @@ atlas-credentials.env
 # Scraper HTML snapshots & temp data
 scrapper/sainsburys/data/
 scrapper/aldi/data/
-*.html
+
+# Ignore scraper HTML snapshots only
+scrapper/**/*.html
 page_source.html
 
 # Jupyter
@@ -47,28 +49,20 @@ page_source.html
 notebook/
 notebooks/
 
-# Web app backend/frontend (not needed for scraper Docker image)
-backend/
-frontend/
-main.py
-
-# Old streamlit app
+# Old streamlit app (dead code)
 app/
-
-# Web app requirements (not needed for scraper Docker image)
-requirements.txt
-
-# Docs
-DEPLOYMENT.md
 
 # Secrets
 cred.txt
 *.key
 *.pem
 
-# Test / temp directories
+# Test / experimental directories
 test_scraper/
 data/
+
+# Local MongoDB data (not for git)
+local-mongodb/
 
 # Large generated files
 *.csv

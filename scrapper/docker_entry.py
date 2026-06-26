@@ -47,16 +47,28 @@ def _run_urls(urls, db, driver, max_retries=2):
             processed += 1
             idx = f"[{retry * total_count + processed}]" if retry > 0 else f"[{processed}]"
             print(f"\n{idx}", end="", flush=True)
+            cat_start = time.time()
             from sainsburys.scraper import scrape_category
             result = scrape_category(url, name, db=db, driver=driver, max_loads=10)
+            cat_elapsed = time.time() - cat_start
 
             if isinstance(result, int):
                 if result > 0:
                     success_count += 1
                     total_products += result
+                    try:
+                        from scraper_metrics import record_category_scrape
+                        record_category_scrape("sainsburys", name, url, result, cat_elapsed, "success")
+                    except Exception:
+                        pass
                 else:
                     driver = _recreate_sainsburys_driver(driver)
                     fail_count += 1
+                    try:
+                        from scraper_metrics import record_category_scrape
+                        record_category_scrape("sainsburys", name, url, 0, cat_elapsed, "failed", str(result) if isinstance(result, int) else None)
+                    except Exception:
+                        pass
                     if retry < max_retries:
                         still_pending.append((name, url))
             else:
@@ -78,6 +90,7 @@ def run_sainsburys():
     from sainsburys.scraper import create_driver, accept_cookies
     from sainsburys.db import SainsburysDB
 
+    start_time = time.time()
     hierarchy = load_hierarchy()
     urls = get_all_urls(hierarchy)
     print(f"\nTotal categories/subcategories to scrape: {len(urls)}")
@@ -110,8 +123,10 @@ def run_sainsburys():
 
     driver.quit()
 
+    elapsed = time.time() - start_time
     print(f"\n{'=' * 60}")
     print(f"Sainsbury's Pipeline Complete")
+    print(f"  Duration: {elapsed:.1f}s")
     print(f"  Successful: {success_count}")
     print(f"  Failed: {fail_count}")
     if still_failed:
@@ -124,6 +139,14 @@ def run_sainsburys():
         print(f"  {s['_id']}: {s['product_count']}")
 
     db.close()
+
+    try:
+        from scraper_metrics import record_scraper_run
+        record_scraper_run("sainsburys", len(urls), success_count, fail_count,
+                          total_products, elapsed)
+    except Exception:
+        pass
+
     return total_products
 
 
@@ -171,15 +194,28 @@ def _run_aldi_urls(urls, db, driver, max_retries=2):
                 skip_count += 1
                 continue
 
+            cat_start = time.time()
             from scrapper.aldi.scraper import scrape_category
             result = scrape_category(url, name, db=db, driver=driver)
+            cat_elapsed = time.time() - cat_start
+
             if isinstance(result, int):
                 if result > 0:
                     success_count += 1
                     total_products += result
+                    try:
+                        from scraper_metrics import record_category_scrape
+                        record_category_scrape("aldi", name, url, result, cat_elapsed, "success")
+                    except Exception:
+                        pass
                 else:
                     driver = _recreate_aldi_driver(driver)
                     fail_count += 1
+                    try:
+                        from scraper_metrics import record_category_scrape
+                        record_category_scrape("aldi", name, url, 0, cat_elapsed, "failed", str(result) if isinstance(result, int) else None)
+                    except Exception:
+                        pass
                     if retry < max_retries:
                         still_pending.append((name, url))
             else:
@@ -212,6 +248,7 @@ def run_aldi():
     print(f"  Active:  {len(to_scrape)} categories")
     print(f"  Skipped: {len(skipped_names)} (seasonal/promo)")
 
+    start_time = time.time()
     db = AldiDB()
     driver = create_driver()
 
@@ -221,8 +258,10 @@ def run_aldi():
 
     driver.quit()
 
+    elapsed = time.time() - start_time
     print(f"\n{'=' * 60}")
     print(f"Aldi Pipeline Complete")
+    print(f"  Duration: {elapsed:.1f}s")
     print(f"  Success: {success_count}  |  Failed: {fail_count}  |  Skipped: {len(skipped_names)}")
     if still_failed:
         print(f"  Still failed after retries:")
@@ -235,6 +274,13 @@ def run_aldi():
     for s in cats:
         print(f"    {s['_id']}: {s['product_count']} products")
     db.close()
+
+    try:
+        from scraper_metrics import record_scraper_run
+        record_scraper_run("aldi", len(to_scrape), success_count, fail_count,
+                          total, elapsed)
+    except Exception:
+        pass
 
     return total
 
