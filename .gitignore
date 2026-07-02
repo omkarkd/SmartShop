@@ -58,6 +58,11 @@ cred.txt
 *.pem
 .streamlit/secrets.toml
 
+# Scraper/Dashboard local data (not for Docker)
+scraper/__pycache__/
+dashboard/__pycache__/
+shared/__pycache__/
+
 # Test / experimental directories
 test_scraper/
 data/

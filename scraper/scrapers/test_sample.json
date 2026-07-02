@@ -1,0 +1,78 @@
+{
+  "test_url": "https://www.aldi.co.uk/products/chilled-food/milk/k/1588161416978051001",
+  "test_category": "Chilled Food > Milk",
+  "test_time": "2026-06-13T11:40:04.676949",
+  "total_products": 30,
+  "stats": {
+    "with_brand": 30,
+    "on_promotion": 4,
+    "own_brand": 22
+  },
+  "samples": [
+    {
+      "url": "https://www.aldi.co.uk/product/cowbelle-uht-semi-skimmed-milk-000000000000416563",
+      "category": "Chilled Food > Milk",
+      "brand": "COWBELLE",
+      "product_name": "UHT Semi Skimmed Milk",
+      "size": "1 L",
+      "price": 0.95,
+      "was_price": 0.99,
+      "price_with_promotion": 0.95,
+      "price_per_unit": "(\u00a30.95/1 L)",
+      "is_own_brand": true,
+      "scraped_at": "2026-06-13 10:40:04.569855+00:00"
+    },
+    {
+      "url": "https://www.aldi.co.uk/product/cowbelle-uht-red-skimmed-milk-000000000000416564",
+      "category": "Chilled Food > Milk",
+      "brand": "COWBELLE",
+      "product_name": "UHT Red Skimmed Milk",
+      "size": "1 L",
+      "price": 0.95,
+      "was_price": 0.99,
+      "price_with_promotion": 0.95,
+      "price_per_unit": "(\u00a30.95/1 L)",
+      "is_own_brand": true,
+      "scraped_at": "2026-06-13 10:40:04.569855+00:00"
+    },
+    {
+      "url": "https://www.aldi.co.uk/product/cowbelle-semi-skimmed-milk-1-7-fat-000000000000416713",
+      "category": "Chilled Food > Milk",
+      "brand": "COWBELLE",
+      "product_name": "Semi Skimmed Milk 1.7% Fat",
+      "size": "3.408 L",
+      "price": 2.4,
+      "was_price": null,
+      "price_with_promotion": null,
+      "price_per_unit": "(\u00a30.70/1 L)",
+      "is_own_brand": true,
+      "scraped_at": "2026-06-13 10:40:04.569855+00:00"
+    },
+    {
+      "url": "https://www.aldi.co.uk/product/cowbelle-semi-skimmed-milk-1-7-fat-000000000000416770",
+      "category": "Chilled Food > Milk",
+      "brand": "COWBELLE",
+      "product_name": "Semi Skimmed Milk 1.7% Fat",
+      "size": "2.272 L",
+      "price": 1.65,
+      "was_price": null,
+      "price_with_promotion": null,
+      "price_per_unit": "(\u00a30.73/1 L)",
+      "is_own_brand": true,
+      "scraped_at": "2026-06-13 10:40:04.569855+00:00"
+    },
+    {
+      "url": "https://www.aldi.co.uk/product/cowbelle-whole-milk-3-6-fat-000000000000416772",
+      "category": "Chilled Food > Milk",
+      "brand": "COWBELLE",
+      "product_name": "Whole Milk 3.6% Fat",
+      "size": "2.272 L",
+      "price": 1.65,
+      "was_price": null,
+      "price_with_promotion": null,
+      "price_per_unit": "(\u00a30.73/1 L)",
+      "is_own_brand": true,
+      "scraped_at": "2026-06-13 10:40:04.569855+00:00"
+    }
+  ]
+}
