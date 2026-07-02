@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartShop - Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="top-bar">
+    <div class="logo">Smart<span>Shop</span></div>
+    <div class="user-info">
+      <span class="user-name" id="user-name"></span>
+      <button id="logout-btn">Logout</button>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <h3>Browse</h3>
+
+        <label class="sidebar-label">Category</label>
+        <select id="category-dropdown" class="sidebar-select">
+          <option value="">All Categories</option>
+        </select>
+
+        <label class="sidebar-label">Retailer</label>
+        <div class="sidebar-retailer-tabs">
+          <button class="retailer-tab active" data-retailer="">All</button>
+          <button class="retailer-tab aldi" data-retailer="aldi">Aldi</button>
+          <button class="retailer-tab sainsburys" data-retailer="sainsburys">Sainsbury's</button>
+          <button class="retailer-tab common" data-retailer="common">Common</button>
+        </div>
+
+        <label class="sidebar-label">Brand</label>
+        <select id="brand-filter" class="sidebar-select">
+          <option value="">All Brands</option>
+        </select>
+
+        <!-- Nectar Toggle -->
+        <div class="sidebar-section">
+          <label class="nectar-toggle-label">
+            <input type="checkbox" id="nectar-toggle">
+            <span class="nectar-toggle-text">Show Nectar Prices</span>
+          </label>
+        </div>
+
+        <div class="sidebar-section">
+          <button id="sidebar-show-cart" class="sidebar-btn cart-btn">
+            Show Cart <span class="badge" id="sidebar-cart-count">0</span>
+          </button>
+        </div>
+
+        <div class="sidebar-section">
+          <button id="sidebar-price-analyzer" class="sidebar-btn price-btn">
+            Price Analyzer
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="search-section">
+          <div class="search-bar">
+            <input id="search-input" type="text" placeholder="Search products across Aldi and Sainsbury's..." autofocus>
+            <button id="search-btn">Search</button>
+          </div>
+
+          <div id="product-container">
+            <div class="loading">
+              <div class="spinner"></div>
+              <p>Search for products or browse by category...</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Cart Overlay -->
+      <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+
+      <!-- Cart Panel (slide-in) -->
+      <div class="cart-panel" id="cart-panel">
+        <div class="cart-header">
+          <h2>Your Cart <span class="count" id="cart-count">0</span></h2>
+          <button id="cart-close" class="cart-close-btn">&times;</button>
+        </div>
+        <div id="cart-body">
+          <div class="cart-empty">
+            <p>Your cart is empty</p>
+            <p style="margin-top:4px;font-size:0.85rem;color:#bbb;">Search products above and add them to compare prices</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Price Analyzer Modal (UI only) -->
+  <div class="modal-overlay" id="price-analyzer-modal" onclick="closePriceAnalyzer(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closePriceAnalyzer()">&times;</button>
+      <h2>Price Analyzer</h2>
+      <p class="modal-subtitle">Compare historical prices and find the best time to buy.</p>
+      <div style="padding:40px;text-align:center;color:#999;background:#f9f9f9;border-radius:8px;margin-top:16px;">
+        <div style="font-size:2rem;margin-bottom:12px;">&#128200;</div>
+        <p style="font-size:1.1rem;font-weight:500;">Coming Soon</p>
+        <p style="margin-top:8px;">Price trends, historical data, and smart savings recommendations will appear here.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

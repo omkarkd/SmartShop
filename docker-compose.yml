@@ -1,0 +1,16 @@
+services:
+  admin:
+    build: .
+    image: smartshop-admin
+    container_name: smartshop-admin
+    ports:
+      - "${PORT:-8501}:${PORT:-8501}"
+    environment:
+      # ⚠ Set MONGO_URI via .env file or export before docker compose up
+      - MONGO_URI=${MONGO_URI?MONGO_URI_required}
+      - DB_NAME=${DB_NAME:-smartshop}
+      - CHROME_HEADLESS=true
+      # ⚠ Set SECRET_KEY in .env for JWT signing
+      - SECRET_KEY=${SECRET_KEY?SECRET_KEY_required}
+    shm_size: 2gb
+    restart: unless-stopped

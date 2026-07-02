@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartShop Admin</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+.login-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+.login-card { background: #1e293b; padding: 40px; border-radius: 12px; width: 360px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+.login-card h1 { color: #38bdf8; margin-bottom: 8px; font-size: 24px; }
+.login-card p { color: #94a3b8; margin-bottom: 24px; font-size: 14px; }
+.login-card input { width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #e2e8f0; font-size: 14px; margin-bottom: 16px; outline: none; transition: border 0.2s; }
+.login-card input:focus { border-color: #38bdf8; }
+.login-card button { width: 100%; padding: 12px; background: #38bdf8; border: none; border-radius: 8px; color: #0f172a; font-weight: 600; font-size: 15px; cursor: pointer; transition: background 0.2s; }
+.login-card button:hover { background: #7dd3fc; }
+.login-error { color: #f87171; font-size: 13px; margin-bottom: 12px; display: none; }
+.app-header { background: #1e293b; padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; }
+.app-header h1 { color: #38bdf8; font-size: 20px; }
+.app-header .user-badge { display: flex; align-items: center; gap: 12px; }
+.app-header .user-badge span { color: #94a3b8; font-size: 13px; }
+.app-header .logout-btn { padding: 6px 16px; background: transparent; border: 1px solid #475569; border-radius: 6px; color: #cbd5e1; cursor: pointer; font-size: 13px; }
+.app-header .logout-btn:hover { background: #334155; }
+.layout { display: flex; min-height: calc(100vh - 60px); }
+.sidebar { width: 240px; background: #1e293b; border-right: 1px solid #334155; padding: 16px 0; flex-shrink: 0; }
+.sidebar a { display: block; padding: 12px 24px; color: #94a3b8; text-decoration: none; font-size: 14px; transition: all 0.2s; border-left: 3px solid transparent; }
+.sidebar a:hover { background: #0f172a; color: #e2e8f0; }
+.sidebar a.active { background: #0f172a; color: #38bdf8; border-left-color: #38bdf8; }
+.sidebar .section-label { padding: 16px 24px 6px; font-size: 11px; text-transform: uppercase; color: #64748b; letter-spacing: 1px; }
+.content { flex: 1; padding: 24px; overflow-y: auto; }
+.page { display: none; }
+.page.active { display: block; }
+.page h2 { font-size: 22px; margin-bottom: 20px; color: #f1f5f9; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: #1e293b; border-radius: 10px; padding: 20px; border: 1px solid #334155; }
+.stat-card .label { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.stat-card .value { font-size: 28px; font-weight: 700; color: #f1f5f9; }
+.stat-card .sub { font-size: 13px; color: #94a3b8; margin-top: 4px; }
+.stat-card .value.green { color: #4ade80; }
+.stat-card .value.blue { color: #38bdf8; }
+.stat-card .value.orange { color: #fb923c; }
+.stat-card .value.red { color: #f87171; }
+.section-card { background: #1e293b; border-radius: 10px; border: 1px solid #334155; margin-bottom: 24px; }
+.section-card .header { padding: 16px 20px; border-bottom: 1px solid #334155; font-size: 15px; font-weight: 600; color: #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+.section-card .body { padding: 16px 20px; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 10px 12px; font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #334155; }
+td { padding: 10px 12px; font-size: 14px; border-bottom: 1px solid #1e293b; }
+tr:hover td { background: #0f172a; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+.badge-success { background: rgba(74,222,128,0.15); color: #4ade80; }
+.badge-failed { background: rgba(248,113,113,0.15); color: #f87171; }
+.badge-completed { background: rgba(56,189,248,0.15); color: #38bdf8; }
+.badge-internal { background: rgba(148,163,184,0.15); color: #94a3b8; }
+.badge-consumer { background: rgba(74,222,128,0.15); color: #4ade80; }
+.filters { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.filters input, .filters select { padding: 8px 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0; font-size: 13px; outline: none; }
+.filters input:focus, .filters select:focus { border-color: #38bdf8; }
+.filters button { padding: 8px 16px; background: #38bdf8; border: none; border-radius: 6px; color: #0f172a; font-weight: 500; cursor: pointer; font-size: 13px; }
+.filters button:hover { background: #7dd3fc; }
+.pagination { display: flex; gap: 8px; align-items: center; margin-top: 16px; justify-content: center; }
+.pagination button { padding: 6px 14px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0; cursor: pointer; font-size: 13px; }
+.pagination button:hover { background: #334155; }
+.pagination button:disabled { opacity: 0.4; cursor: default; }
+.pagination span { font-size: 13px; color: #94a3b8; }
+.health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.health-card { background: #1e293b; border-radius: 10px; padding: 20px; border: 1px solid #334155; }
+.health-card .service-name { font-size: 14px; color: #94a3b8; margin-bottom: 8px; }
+.health-card .status-indicator { display: flex; align-items: center; gap: 8px; }
+.health-card .dot { width: 10px; height: 10px; border-radius: 50%; }
+.health-card .dot.green { background: #4ade80; }
+.health-card .dot.red { background: #f87171; }
+.health-card .status-text { font-size: 15px; font-weight: 600; }
+.chart-bar-container { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.chart-bar-bg { flex: 1; height: 20px; background: #0f172a; border-radius: 4px; overflow: hidden; }
+.chart-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+.collection-tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; margin-right: 4px; }
+.collection-table { margin-top: 12px; }
+.loading { text-align: center; padding: 40px; color: #64748b; }
+.error-msg { color: #f87171; padding: 12px; background: rgba(248,113,113,0.1); border-radius: 8px; margin-bottom: 12px; }
+.category-detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+@media (max-width: 768px) { .sidebar { display: none; } .content { padding: 16px; } }
+</style>
+</head>
+<body>
+<div id="loginPage" class="login-page">
+  <div class="login-card">
+    <h1>Admin Panel</h1>
+    <p>SmartShop Performance Dashboard</p>
+    <div class="login-error" id="loginError">Invalid credentials</div>
+    <input type="text" id="usernameInput" placeholder="Username" value="admin" autocomplete="off">
+    <input type="password" id="passwordInput" placeholder="Password" value="admin">
+    <button onclick="login()">Sign In</button>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+  <div class="app-header">
+    <h1>SmartShop Admin</h1>
+    <div class="user-badge">
+      <span>admin</span>
+      <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+  <div class="layout">
+    <nav class="sidebar">
+      <div class="section-label">Overview</div>
+      <a href="#" class="active" data-page="dashboard" onclick="showPage('dashboard')">Parent Dashboard</a>
+      <div class="section-label">Dockerized Services</div>
+      <a href="#" data-page="scraping" onclick="showPage('scraping')">Data Collection</a>
+      <div class="section-label">Infrastructure</div>
+      <a href="#" data-page="database" onclick="showPage('database')">Database</a>
+      <a href="#" data-page="health" onclick="showPage('health')">Service Health</a>
+    </nav>
+    <div class="content">
+
+      <!-- Parent Dashboard -->
+      <div class="page active" id="page-dashboard">
+        <h2>Parent Dashboard</h2>
+        <div class="stats-grid" id="overviewStats"></div>
+        <div class="section-card">
+          <div class="header">Today's Scraping Activity</div>
+          <div class="body" id="todayActivity"><div class="loading">Loading...</div></div>
+        </div>
+        <div class="section-card">
+          <div class="header">Scraper Run History</div>
+          <div class="body" id="scraperHistory"><div class="loading">Loading...</div></div>
+        </div>
+      </div>
+
+      <!-- Data Collection (Scraping) Dashboard -->
+      <div class="page" id="page-scraping">
+        <h2>Data Collection Runs</h2>
+        <div class="filters">
+          <input type="date" id="filterDateFrom" placeholder="From">
+          <input type="date" id="filterDateTo" placeholder="To">
+          <select id="filterRetailer">
+            <option value="">All Retailers</option>
+            <option value="aldi">Aldi</option>
+            <option value="sainsburys">Sainsbury's</option>
+          </select>
+          <select id="filterStatus">
+            <option value="">All Statuses</option>
+            <option value="completed">Completed</option>
+            <option value="failed">Failed</option>
+          </select>
+          <button onclick="loadScrapingRuns()">Apply Filters</button>
+        </div>
+        <div class="section-card">
+          <div class="header">Scraping Runs</div>
+          <div class="body" id="scrapingRunsTable"><div class="loading">Loading...</div></div>
+        </div>
+        <div class="pagination" id="scrapingPagination"></div>
+        <!-- Category detail modal -->
+        <div id="runDetail" style="display:none" class="section-card">
+          <div class="header">
+            <span>Run Detail</span>
+            <button onclick="closeRunDetail()" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:18px">&times;</button>
+          </div>
+          <div class="body" id="runDetailBody"></div>
+        </div>
+      </div>
+
+      <!-- Database Dashboard -->
+      <div class="page" id="page-database">
+        <h2>Database Overview</h2>
+        <div class="stats-grid" id="dbStatsGrid"></div>
+        <div class="section-card">
+          <div class="header">Collections</div>
+          <div class="body" id="dbCollections"><div class="loading">Loading...</div></div>
+        </div>
+      </div>
+
+      <!-- Health Dashboard -->
+      <div class="page" id="page-health">
+        <h2>Service Health</h2>
+        <div class="health-grid" id="healthChecks"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+let token = localStorage.getItem('admin_token');
+let scrapPage = 1;
+
+function login() {
+  const username = document.getElementById('usernameInput').value;
+  const password = document.getElementById('passwordInput').value;
+  document.getElementById('loginError').style.display = 'none';
+  fetch('/api/admin/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username, password})
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.token) {
+      token = data.token;
+      localStorage.setItem('admin_token', token);
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('app').style.display = 'flex';
+      document.getElementById('app').style.flexDirection = 'column';
+      loadAll();
+    } else {
+      document.getElementById('loginError').textContent = data.detail || 'Invalid credentials';
+      document.getElementById('loginError').style.display = 'block';
+    }
+  })
+  .catch(() => {
+    document.getElementById('loginError').textContent = 'Connection error';
+    document.getElementById('loginError').style.display = 'block';
+  });
+}
+
+function logout() {
+  localStorage.removeItem('admin_token');
+  token = null;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loginPage').style.display = 'flex';
+}
+
+function authHeaders() {
+  return {'Authorization': 'Bearer ' + token};
+}
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector('.sidebar a[data-page="' + name + '"]').classList.add('active');
+  if (name === 'scraping') loadScrapingRuns();
+  if (name === 'database') loadDatabase();
+  if (name === 'health') loadHealth();
+  if (name === 'dashboard') loadDashboard();
+}
+
+function loadAll() {
+  loadDashboard();
+  loadDatabase();
+  loadHealth();
+}
+
+function dateStr(d) {
+  if (!d) return '-';
+  try { return new Date(d).toLocaleString(); } catch(e) { return d; }
+}
+
+function secStr(s) {
+  if (s == null) return '-';
+  if (s < 60) return s.toFixed(1) + 's';
+  if (s < 3600) return (s/60).toFixed(1) + 'm';
+  return (s/3600).toFixed(2) + 'h';
+}
+
+// === DASHBOARD ===
+function loadDashboard() {
+  fetch('/api/admin/dashboard', {headers: authHeaders()})
+  .then(r => r.json())
+  .then(data => {
+    renderDashboard(data);
+  })
+  .catch(e => {
+    document.getElementById('overviewStats').innerHTML = '<div class="error-msg">Failed to load: ' + e.message + '</div>';
+  });
+}
+
+function renderDashboard(data) {
+  const runs = data.scraper_runs || [];
+  const todayCat = data.today_category_stats || [];
+  const totalCatScraped = todayCat.reduce((s, r) => s + r.categories_success, 0);
+  const totalCatFailed = todayCat.reduce((s, r) => s + r.categories_failed, 0);
+  const totalProductsToday = todayCat.reduce((s, r) => s + r.total_products_found, 0);
+  const todayRuns = data.today_runs || 0;
+
+  const dbs = data.database || {};
+  const collectionsInfo = data.collections || [];
+  const consumerCols = collectionsInfo.filter(c => c.type === 'consumer').length;
+  const internalCols = collectionsInfo.filter(c => c.type === 'internal').length;
+
+  document.getElementById('overviewStats').innerHTML = `
+    <div class="stat-card">
+      <div class="label">Today's Runs</div>
+      <div class="value blue">${todayRuns}</div>
+      <div class="sub">scraper runs today</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Today's Products</div>
+      <div class="value green">${totalProductsToday}</div>
+      <div class="sub">total scraped today</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Categories Today</div>
+      <div class="value orange">${totalCatScraped} <span style="font-size:14px;color:#f87171">/${totalCatFailed} failed</span></div>
+      <div class="sub">${totalCatScraped + totalCatFailed} total categories</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Database</div>
+      <div class="value blue">${dbs.total_size || '-'}</div>
+      <div class="sub">${consumerCols} consumer + ${internalCols} internal collections</div>
+    </div>
+  `;
+
+  // Today activity
+  let todayHtml = '';
+  if (todayCat.length === 0) {
+    todayHtml = '<div class="loading">No activity today</div>';
+  } else {
+    todayHtml = '<table><tr><th>Retailer</th><th>Categories OK</th><th>Failed</th><th>Products Found</th></tr>';
+    todayCat.forEach(r => {
+      todayHtml += `<tr>
+        <td style="text-transform:capitalize">${r._id}</td>
+        <td><span class="badge badge-success">${r.categories_success}</span></td>
+        <td><span class="badge badge-failed">${r.categories_failed}</span></td>
+        <td>${r.total_products_found}</td>
+      </tr>`;
+    });
+    todayHtml += '</table>';
+  }
+  document.getElementById('todayActivity').innerHTML = todayHtml;
+
+  // Scraper history
+  let histHtml = '';
+  if (runs.length === 0) {
+    histHtml = '<div class="loading">No scraper runs recorded yet</div>';
+  } else {
+    histHtml = '<table><tr><th>Retailer</th><th>Last Run</th><th>Status</th><th>Products</th><th>Avg Products</th><th>Total Runs</th></tr>';
+    runs.forEach(r => {
+      histHtml += `<tr>
+        <td style="text-transform:capitalize">${r._id}</td>
+        <td>${dateStr(r.last_run)}</td>
+        <td><span class="badge badge-${r.last_status === 'completed' ? 'success' : 'failed'}">${r.last_status}</span></td>
+        <td>${r.last_products || 0}</td>
+        <td>${Math.round(r.avg_products || 0)}</td>
+        <td>${r.total_runs}</td>
+      </tr>`;
+    });
+    histHtml += '</table>';
+  }
+  document.getElementById('scraperHistory').innerHTML = histHtml;
+}
+
+// === SCRAPING RUNS ===
+function loadScrapingRuns() {
+  const dateFrom = document.getElementById('filterDateFrom').value;
+  const dateTo = document.getElementById('filterDateTo').value;
+  const retailer = document.getElementById('filterRetailer').value;
+  const status = document.getElementById('filterStatus').value;
+  let url = `/api/admin/scraping-runs?page=${scrapPage}&per_page=15`;
+  if (dateFrom) url += '&date_from=' + dateFrom;
+  if (dateTo) url += '&date_to=' + dateTo;
+  if (retailer) url += '&retailer=' + retailer;
+  if (status) url += '&status=' + status;
+
+  fetch(url, {headers: authHeaders()})
+  .then(r => r.json())
+  .then(data => {
+    renderScrapingRuns(data);
+  })
+  .catch(e => {
+    document.getElementById('scrapingRunsTable').innerHTML = '<div class="error-msg">Failed: ' + e.message + '</div>';
+  });
+}
+
+function renderScrapingRuns(data) {
+  if (data.error) {
+    document.getElementById('scrapingRunsTable').innerHTML = '<div class="error-msg">' + data.error + '</div>';
+    return;
+  }
+  const runs = data.runs || [];
+  let html;
+  if (runs.length === 0) {
+    html = '<div class="loading">No runs found</div>';
+  } else {
+    html = '<table><tr><th>Time</th><th>Retailer</th><th>Status</th><th>Categories</th><th>Products</th><th>Duration</th><th></th></tr>';
+    runs.forEach(r => {
+      html += `<tr>
+        <td>${dateStr(r.timestamp)}</td>
+        <td style="text-transform:capitalize">${r.retailer}</td>
+        <td><span class="badge badge-${r.status === 'completed' ? 'success' : 'failed'}">${r.status}</span></td>
+        <td>${r.categories_success || 0} / ${r.categories_failed || 0}</td>
+        <td>${r.products_total || 0}</td>
+        <td>${secStr(r.duration_seconds)}</td>
+        <td><a href="#" style="color:#38bdf8;text-decoration:none;font-size:13px" onclick="showRunDetail('${r._id}')">View</a></td>
+      </tr>`;
+    });
+    html += '</table>';
+  }
+  document.getElementById('scrapingRunsTable').innerHTML = html;
+
+  const total = data.total || 0;
+  const perPage = data.per_page || 15;
+  const totalPages = Math.ceil(total / perPage);
+  let pagHtml = `<button onclick="scrapPage=1;loadScrapingRuns()" ${scrapPage <= 1 ? 'disabled' : ''}>First</button>
+    <button onclick="scrapPage=Math.max(1,scrapPage-1);loadScrapingRuns()" ${scrapPage <= 1 ? 'disabled' : ''}>Prev</button>
+    <span>Page ${scrapPage} of ${totalPages || 1} (${total} total)</span>
+    <button onclick="scrapPage=Math.min(${totalPages || 1},scrapPage+1);loadScrapingRuns()" ${scrapPage >= totalPages ? 'disabled' : ''}>Next</button>
+    <button onclick="scrapPage=${totalPages || 1};loadScrapingRuns()" ${scrapPage >= totalPages ? 'disabled' : ''}>Last</button>`;
+  document.getElementById('scrapingPagination').innerHTML = pagHtml;
+}
+
+function showRunDetail(runId) {
+  fetch('/api/admin/scraping-runs/' + runId, {headers: authHeaders()})
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) {
+      document.getElementById('runDetailBody').innerHTML = '<div class="error-msg">' + data.error + '</div>';
+    } else {
+      let html = `<div class="category-detail-grid">
+        <div class="stat-card"><div class="label">Retailer</div><div style="text-transform:capitalize;font-size:20px;font-weight:700">${data.retailer}</div></div>
+        <div class="stat-card"><div class="label">Status</div><div><span class="badge badge-${data.status === 'completed' ? 'success' : 'failed'}">${data.status}</span></div></div>
+        <div class="stat-card"><div class="label">Products</div><div style="font-size:20px;font-weight:700">${data.products_total || 0}</div></div>
+        <div class="stat-card"><div class="label">Duration</div><div style="font-size:20px;font-weight:700">${secStr(data.duration_seconds)}</div></div>
+      </div>`;
+
+      const cats = data.categories || [];
+      if (cats.length > 0) {
+        html += '<table><tr><th>Category</th><th>Products</th><th>Duration</th><th>Status</th></tr>';
+        cats.sort((a,b) => (b.duration_seconds || 0) - (a.duration_seconds || 0));
+        cats.forEach(c => {
+          html += `<tr>
+            <td>${c.category}</td>
+            <td>${c.product_count || 0}</td>
+            <td>${secStr(c.duration_seconds)}
+              <div class="chart-bar-container">
+                <div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${Math.min(100, (c.duration_seconds || 0) / Math.max(...cats.map(x => x.duration_seconds || 0)) * 100)}%;background:#38bdf8"></div></div>
+              </div>
+            </td>
+            <td><span class="badge badge-${c.status === 'success' ? 'success' : 'failed'}">${c.status}</span></td>
+          </tr>`;
+        });
+        html += '</table>';
+      } else {
+        html += '<div class="loading">No category-level data for this run</div>';
+      }
+      document.getElementById('runDetailBody').innerHTML = html;
+    }
+    document.getElementById('runDetail').style.display = 'block';
+  });
+}
+
+function closeRunDetail() {
+  document.getElementById('runDetail').style.display = 'none';
+}
+
+// === DATABASE ===
+function loadDatabase() {
+  fetch('/api/admin/database', {headers: authHeaders()})
+  .then(r => r.json())
+  .then(data => {
+    renderDatabase(data);
+  })
+  .catch(e => {
+    document.getElementById('dbStatsGrid').innerHTML = '<div class="error-msg">Failed: ' + e.message + '</div>';
+  });
+}
+
+function renderDatabase(data) {
+  const dbs = data.db_stats || {};
+  document.getElementById('dbStatsGrid').innerHTML = `
+    <div class="stat-card">
+      <div class="label">Total Size</div>
+      <div class="value blue">${dbs.total_size || '-'}</div>
+      <div class="sub">${dbs.collections || 0} collections</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Documents</div>
+      <div class="value green">${(dbs.objects || 0).toLocaleString()}</div>
+      <div class="sub">across all collections</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Data Size</div>
+      <div class="value orange">${dbs.data_size || '-'}</div>
+      <div class="sub">${dbs.index_size || '-'} indexes</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Storage Used</div>
+      <div class="value">${dbs.storage_size || '-'}</div>
+      <div class="sub">on disk</div>
+    </div>
+  `;
+
+  const cols = data.collections || [];
+  let html = '<table class="collection-table"><tr><th>Collection</th><th>Type</th><th>Description</th><th>Documents</th></tr>';
+  cols.forEach(c => {
+    html += `<tr>
+      <td style="font-family:monospace;font-size:13px">${c.name}</td>
+      <td><span class="badge badge-${c.type}">${c.type}</span></td>
+      <td style="color:#94a3b8;font-size:13px">${c.description}</td>
+      <td>${(c.document_count || 0).toLocaleString()}</td>
+    </tr>`;
+  });
+  html += '</table>';
+  document.getElementById('dbCollections').innerHTML = html;
+}
+
+// === HEALTH ===
+function loadHealth() {
+  fetch('/api/admin/health', {headers: authHeaders()})
+  .then(r => r.json())
+  .then(data => {
+    let html = '';
+    // MongoDB
+    const mongo = data.mongodb || {};
+    html += `<div class="health-card">
+      <div class="service-name">MongoDB</div>
+      <div class="status-indicator">
+        <div class="dot ${mongo.status === 'healthy' ? 'green' : 'red'}"></div>
+        <span class="status-text" style="color:${mongo.status === 'healthy' ? '#4ade80' : '#f87171'}">${mongo.status}</span>
+        ${mongo.latency_ms ? '<span style="color:#94a3b8;font-size:13px;margin-left:8px">' + mongo.latency_ms + 'ms</span>' : ''}
+      </div>
+      ${mongo.error ? '<div style="color:#f87171;font-size:13px;margin-top:4px">' + mongo.error + '</div>' : ''}
+    </div>`;
+
+    html += `<div class="health-card">
+      <div class="service-name">Python Dependencies</div>
+      <div style="font-size:13px;color:#94a3b8">
+        <div>PyMongo: ${data.pymongo_version || 'N/A'}</div>
+        <div>bcrypt: ${data.bcrypt_available ? '<span style="color:#4ade80">available</span>' : '<span style="color:#f87171">missing</span>'}</div>
+      </div>
+    </div>`;
+
+    html += `<div class="health-card">
+      <div class="service-name">API Server</div>
+      <div class="status-indicator">
+        <div class="dot green"></div>
+        <span class="status-text" style="color:#4ade80">running</span>
+        <span style="color:#94a3b8;font-size:13px;margin-left:8px">FastAPI + Uvicorn</span>
+      </div>
+    </div>`;
+
+    document.getElementById('healthChecks').innerHTML = html;
+  })
+  .catch(e => {
+    document.getElementById('healthChecks').innerHTML = '<div class="error-msg">Failed: ' + e.message + '</div>';
+  });
+}
+
+// Auto-login if token exists
+if (token) {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('app').style.flexDirection = 'column';
+  loadAll();
+}
+</script>
+</body>
+</html>

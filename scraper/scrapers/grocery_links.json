@@ -1,0 +1,42 @@
+[
+  {
+    "text": "Log in / Register",
+    "href": "https://www.sainsburys.co.uk/gol-ui/oauth/login"
+  },
+  {
+    "text": "",
+    "href": "https://www.sainsburys.co.uk/gol-ui/groceries"
+  },
+  {
+    "text": "Search by list",
+    "href": "https://www.sainsburys.co.uk/gol-ui/search-a-list-of-items"
+  },
+  {
+    "text": "Groceries",
+    "href": "https://www.sainsburys.co.uk/shop/gb/groceries"
+  },
+  {
+    "text": "Favourites",
+    "href": "https://www.sainsburys.co.uk/gol-ui/favourites-as-list"
+  },
+  {
+    "text": "Nectar",
+    "href": "https://www.sainsburys.co.uk/gol-ui/nectar"
+  },
+  {
+    "text": "Offers",
+    "href": "https://www.sainsburys.co.uk/gol-ui/offers"
+  },
+  {
+    "text": "Recipes",
+    "href": "https://www.sainsburys.co.uk/gol-ui/recipes"
+  },
+  {
+    "text": "Delivery Pass\nopens in new tab",
+    "href": "https://www.sainsburys.co.uk/shop/gb/saver"
+  },
+  {
+    "text": "List of Partners (vendors)",
+    "href": "https://www.sainsburys.co.uk/gol-ui/groceries#"
+  }
+]

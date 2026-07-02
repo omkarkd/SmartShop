@@ -1,0 +1,5 @@
+streamlit==1.28.0
+pandas==2.2.3
+plotly==5.24.1
+pymongo==4.16.0
+bcrypt==5.0.0
