@@ -128,7 +128,7 @@ def show():
                 "Last Run": str(r.get("last_run", "-"))[:19],
                 "Status": r.get("last_status", "-"),
                 "Products": r.get("last_products", 0),
-                "Avg Products": int(r.get("avg_products", 0)),
+                "Avg Products": int(r.get("avg_products") or 0),
                 "Total Runs": r.get("total_runs", 0),
             } for r in summary]
             st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
