@@ -65,15 +65,16 @@ def show():
 
         chrome_ok, chrome_path = can_run_scraper()
 
-        # Detect if running on Streamlit Cloud (no Chrome available)
-        on_cloud = "STREAMLIT_CLOUD" in os.environ or "STREAMLIT_RUN_ON_SAVE" in os.environ or not chrome_ok and "STREAMLIT_" in str(os.environ.get("SERVER_SOFTWARE", ""))
+        # Detect Streamlit Cloud (no Chrome available, no local scraping)
+        on_cloud = os.environ.get("STREAMLIT_RUN_ON_SAVE") is not None
 
         if on_cloud:
             st.info(
                 "  **Streamlit Cloud detected.** Scraping requires Chrome/Chromium "
                 "and cannot run here. Use the Docker container locally:\n\n"
                 "```bash\n"
-                "docker-compose run admin\n"
+                "export MONGO_URI='your_atlas_uri'\n"
+                "docker compose up admin\n"
                 "```"
             )
         if chrome_ok:

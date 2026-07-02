@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from datetime import datetime, timezone
 
 st.set_page_config(
@@ -30,7 +31,9 @@ if not st.session_state.admin_logged_in:
     username = st.text_input("Username", value="admin", key="login_user")
     password = st.text_input("Password", value="admin", type="password", key="login_pass")
     if st.button("Sign In", type="primary", use_container_width=True):
-        if username == "admin" and password == "admin":
+        admin_user = os.getenv("ADMIN_USER", "admin")
+        admin_pass = os.getenv("ADMIN_PASS", "admin")
+        if username == admin_user and password == admin_pass:
             st.session_state.admin_logged_in = True
             st.rerun()
         else:

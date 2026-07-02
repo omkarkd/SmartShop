@@ -30,10 +30,12 @@ ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
 ENV CHROME_VERSION_MAIN=149
 ENV PYTHONUNBUFFERED=1
 
-# Default MongoDB connection (override with env var for local or Atlas)
-ENV MONGO_URI=mongodb+srv://kadamomkar05_db_user:h4fc1e5VeHkcvu7K@initial-data-dump1.qxe6ie5.mongodb.net/smartshop?retryWrites=true&w=majority
+# Default MongoDB connection — MUST override via env var or Streamlit secrets
+# ⚠ NEVER hardcode real credentials here; they end up in the image.
+ENV MONGO_URI=""
 ENV DB_NAME=smartshop
 
 EXPOSE 8501
 
-ENTRYPOINT ["streamlit", "run", "admin_app.py", "--server.port=8501", "--server.headless=true", "--server.address=0.0.0.0"]
+# Use $PORT if set (Render/Streamlit Cloud), otherwise 8501
+ENTRYPOINT ["sh", "-c", "streamlit run admin_app.py --server.port=${PORT:-8501} --server.headless=true --server.address=0.0.0.0"]

@@ -7,7 +7,7 @@ python-multipart==0.0.32
 # Auth
 passlib[bcrypt]==1.7.4
 bcrypt==5.0.0
-python-jose[cryptography]>=3.3.0
+python-jose[cryptography]==3.3.0
 
 # Metrics
 prometheus-client==0.21.1
@@ -16,9 +16,9 @@ prometheus-client==0.21.1
 pymongo==4.16.0
 
 # Admin dashboard (Streamlit Cloud)
-streamlit>=1.28.0
-pandas>=2.0.0
-plotly>=5.0.0
+streamlit==1.28.0
+pandas==2.2.3
+plotly==5.24.1
 
 # Scraper (used when running locally / Docker)
 selenium==4.43.0

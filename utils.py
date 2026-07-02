@@ -315,7 +315,16 @@ def run_scraper_background(request_id: str, retailer: str):
                 print(line, flush=True)
                 _log(line)
 
-        proc.wait()
+        try:
+            proc.wait(timeout=7200)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait(timeout=10)
+            _log("Scraper timed out after 7200s — process killed")
+            update_queue_status(request_id, "failed",
+                                completed_at=datetime.now(timezone.utc),
+                                error="Timeout after 7200s")
+            return
         exit_code = proc.returncode
 
         if exit_code == 0:

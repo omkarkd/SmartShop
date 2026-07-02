@@ -18,3 +18,6 @@ cred.txt
 *.csv
 *.dump
 *.bson
+.env
+.env.*
+.streamlit/secrets.toml
