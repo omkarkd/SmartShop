@@ -1,0 +1,18 @@
+# .github/workflows/scrape.yml
+name: Scrape and push to Mongo
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # every 6 hours
+  workflow_dispatch: {}      # lets you trigger manually to test
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t scraper ./scraper
+      - name: Run scraper
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: docker run --rm -e MONGO_URI="$MONGO_URI" scraper
