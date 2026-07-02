@@ -23,20 +23,23 @@ SESSION_TTL_HOURS = int(os.environ.get("SESSION_TTL_HOURS", "8"))
 def seed_admin_user():
     """Create the initial admin user if no users exist in the database.
 
-    Reads credentials from environment variables ADMIN_SEED_USER and
-    ADMIN_SEED_PASS. These must be set on first deploy; they are NOT
-    runtime defaults — once a user exists, seed vars are ignored.
+    Checks these env vars (in order):
+      1. ADMIN_SEED_USER / ADMIN_SEED_PASS  (new, preferred)
+      2. ADMIN_USER / ADMIN_PASS             (legacy fallback)
+      3. Falls back to admin/admin with a warning (never block login)
     """
     db = get_db()
     if db["users"].count_documents({}) > 0:
         return  # already seeded
 
-    seed_user = os.environ.get("ADMIN_SEED_USER")
-    seed_pass = os.environ.get("ADMIN_SEED_PASS")
+    seed_user = os.environ.get("ADMIN_SEED_USER") or os.environ.get("ADMIN_USER")
+    seed_pass = os.environ.get("ADMIN_SEED_PASS") or os.environ.get("ADMIN_PASS")
     if not seed_user or not seed_pass:
-        print("[auth] WARNING: No users in DB and ADMIN_SEED_USER/PASS not set "
-              "— dashboard will deny all logins until a user is created.")
-        return
+        print("[auth] WARNING: No admin user configured. "
+              "Set ADMIN_SEED_USER/ADMIN_SEED_PASS env vars. "
+              "Falling back to admin/admin — CHANGE IMMEDIATELY.")
+        seed_user = "admin"
+        seed_pass = "admin"
 
     hashed = bcrypt.hashpw(seed_pass.encode("utf-8"), bcrypt.gensalt())
     db["users"].insert_one({

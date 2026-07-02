@@ -1,8 +1,14 @@
 import os
+import sys
 import streamlit as st
 from datetime import datetime, timezone
 
-from dashboard.auth import seed_admin_user, authenticate, is_session_expired
+# Support both 'dashboard.auth' (Docker/PYTHONPATH) and bare 'auth' (buildpack with Root Directory)
+try:
+    from dashboard.auth import seed_admin_user, authenticate, is_session_expired
+except ModuleNotFoundError:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from auth import seed_admin_user, authenticate, is_session_expired
 
 # ── Lifecycle setup ──
 seed_admin_user()
