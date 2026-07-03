@@ -269,17 +269,13 @@ def _scrape_category_impl(url, category_name, db=None, driver=None):
 
             if db:
                 existing = 0
-                new_prods = []
                 for p in products:
                     if p["url"] and db.product_exists(p["url"]):
                         existing += 1
-                    else:
-                        new_prods.append(p)
-                if new_prods:
-                    db.insert_products(new_prods)
+                db.insert_products(products)
                 db.log_scrape(url, category_name, len(products), page=page_num)
                 total_products += len(products)
-                print(f"      ({existing} existing, {len(new_prods)} new)")
+                print(f"      ({existing} updated, {len(products) - existing} new)")
             else:
                 all_products.extend(products)
                 total_products += len(products)
